@@ -1,3 +1,4 @@
 class Product < ApplicationRecord
-  belongs_to :source, polymorphic: true 
+  validates :name, :available, :price
+  belongs_to :source, polymorphic: true
 end

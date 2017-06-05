@@ -1,3 +1,4 @@
 class Address < ApplicationRecord
-  belongs_to :user 
+  validates :zip_code, presence: true
+  belongs_to :user
 end

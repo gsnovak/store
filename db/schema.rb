@@ -10,7 +10,76 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170605201018) do
+ActiveRecord::Schema.define(version: 20170605212830) do
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "street_addr"
+    t.string "state"
+    t.string "city"
+    t.integer "zip_code"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_addresses_on_user_id"
+  end
+
+  create_table "coupons", force: :cascade do |t|
+    t.float "amount"
+    t.string "name"
+    t.string "source_type"
+    t.integer "source_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_type", "source_id"], name: "index_coupons_on_source_type_and_source_id"
+  end
+
+  create_table "credit_cards", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.integer "card_number"
+    t.datetime "expiration_date"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_credit_cards_on_user_id"
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.integer "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string "state"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "order_id"
+    t.integer "credit_card_id"
+    t.float "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["credit_card_id"], name: "index_payments_on_credit_card_id"
+    t.index ["order_id"], name: "index_payments_on_order_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.string "available"
+    t.integer "on_hand_count"
+    t.float "price"
+    t.string "source_type"
+    t.integer "source_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_type", "source_id"], name: "index_products_on_source_type_and_source_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -25,6 +94,9 @@ ActiveRecord::Schema.define(version: 20170605201018) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "user_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
