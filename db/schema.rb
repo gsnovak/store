@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170605212830) do
+ActiveRecord::Schema.define(version: 20170606143427) do
 
   create_table "addresses", force: :cascade do |t|
     t.string "street_addr"
@@ -20,27 +20,26 @@ ActiveRecord::Schema.define(version: 20170605212830) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "state_id"
+    t.index ["state_id"], name: "index_addresses_on_state_id"
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
   create_table "coupons", force: :cascade do |t|
     t.float "amount"
     t.string "name"
-    t.string "source_type"
-    t.integer "source_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["source_type", "source_id"], name: "index_coupons_on_source_type_and_source_id"
   end
 
   create_table "credit_cards", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.integer "card_number"
     t.datetime "expiration_date"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "token"
     t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 
@@ -48,7 +47,10 @@ ActiveRecord::Schema.define(version: 20170605212830) do
     t.integer "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "source_type"
+    t.integer "source_id"
     t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["source_type", "source_id"], name: "index_order_items_on_source_type_and_source_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -71,14 +73,18 @@ ActiveRecord::Schema.define(version: 20170605212830) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.string "available"
+    t.boolean "available"
     t.integer "on_hand_count"
     t.float "price"
-    t.string "source_type"
-    t.integer "source_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["source_type", "source_id"], name: "index_products_on_source_type_and_source_id"
+  end
+
+  create_table "states", force: :cascade do |t|
+    t.string "name"
+    t.string "abbreviation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

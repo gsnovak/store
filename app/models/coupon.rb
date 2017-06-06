@@ -1,4 +1,4 @@
 class Coupon < ApplicationRecord
   validates :amount, :name, presence: true
-  belongs_to :source, polymorphic: true
+  has_many :order_items, as: :source
 end
