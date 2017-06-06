@@ -1,3 +1,4 @@
 class Payment < ApplicationRecord
-  belongs_to :credit_card 
+  validates :amount, :amount, presence: true
+  belongs_to :credit_card
 end

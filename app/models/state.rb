@@ -1,3 +1,4 @@
 class State < ApplicationRecord
-  belongs_to :address
+  validates :abbreviation, :name, presence: true
+  has_many :address
 end
