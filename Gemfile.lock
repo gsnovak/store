@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/wantable/ar_state_machine.git
+  revision: 4e77b1a4a02bb34db3b02d908741fe2f524d7c2d
+  specs:
+    ar_state_machine (0.1.0)
+      activerecord (>= 4.0.0)
+      timecop
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -70,6 +78,11 @@ GEM
       warden (~> 1.2.3)
     erubi (1.6.0)
     execjs (2.7.0)
+    factory_girl (4.8.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.8.0)
+      factory_girl (~> 4.8.0)
+      railties (>= 3.0.0)
     ffi (1.9.18)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
@@ -160,6 +173,7 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.7)
+    timecop (0.8.1)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.3)
@@ -185,10 +199,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ar_state_machine!
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
   devise
+  factory_girl_rails (~> 4.0)
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   puma (~> 3.7)
