@@ -6,9 +6,10 @@ class CreditCardTest < ActiveSupport::TestCase
     assert credit_card.valid?
   end
 
-  test 'credit card invalid without expiration date' do
+  test 'credit card invalid without month/year' do
     credit_card = create(:credit_card)
-    credit_card.expiration_date = nil
+    credit_card.month = nil
+    credit_card.year = nil
     refute credit_card.valid?
     assert_not_nil credit_card.errors[:expiration_date]
   end

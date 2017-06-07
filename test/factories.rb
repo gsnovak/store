@@ -1,4 +1,13 @@
 FactoryGirl.define do
+
+  sequence :email do |n|
+    "person#{n}@example.com"
+  end
+
+  sequence :user_name do |n|
+    "username#{n}"
+  end
+
   factory :product do
     name "My Amazing Article"
     available true
@@ -7,8 +16,8 @@ FactoryGirl.define do
   end
 
   factory :user do
-    user_name 'John Doe'
-    email 'fake.email@gmail.com'
+    user_name { generate :user_name }
+    email { generate :email }
     password 'password123'
   end
 
@@ -34,7 +43,8 @@ FactoryGirl.define do
     first_name 'John'
     last_name 'Doe'
     token "1233432"
-    expiration_date DateTime.new(2017,2,3)
+    year 2017
+    month 10
     association :user, factory: :user
   end
 
@@ -44,7 +54,7 @@ FactoryGirl.define do
   end
 
   factory :order do
-    state 'cart'
+    state :cart
     association :user, factory: :user
   end
 end

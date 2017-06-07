@@ -1,11 +1,11 @@
 require 'test_helper'
 
-class UserTest < ActiveSupport::TestCase
+class StateTest < ActiveSupport::TestCase
   test 'valid state' do
     state = create(:state)
     assert state.valid?
   end
-  
+
   test 'invalid without name' do
     state = create(:state)
     state.name = nil

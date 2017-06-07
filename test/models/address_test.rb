@@ -6,17 +6,12 @@ class AddressTest < ActiveSupport::TestCase
     assert address.valid?
   end
 
-  test 'invalid without name' do
+  test 'invalid without state/zip' do
     address = create(:address)
     address.zip_code = nil
-    refute address.valid?
-    assert_not_nil address.errors[:name]
-  end
-
-  test 'invalid without abbreviation' do
-    address = create(:address)
     address.state = nil
     refute address.valid?
     assert_not_nil address.errors[:state]
+    assert_not_nil address.errors[:zip_code]
   end
 end

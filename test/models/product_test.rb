@@ -13,13 +13,6 @@ class ProductTest < ActiveSupport::TestCase
     assert_not_nil product.errors[:name], 'no validation error for name'
   end
 
-  test 'Invalid without available set' do
-    product = create(:product)
-    product.available = nil
-    refute product.valid?, 'product valid without available set'
-    assert_not_nil product.errors[:available], 'no validation error for available'
-  end
-
   test 'Invalid without price' do
     product = create(:product)
     product.price = nil
