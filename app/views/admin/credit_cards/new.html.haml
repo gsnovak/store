@@ -1,5 +1,5 @@
 .form-wrapper
-  = bootstrap_form_for(@credit_card, url: admin_credit_cards_path, html: { method: :post }) do |f|
+  = bootstrap_form_for(@source_model, url: admin_credit_cards_path, html: { method: :post }) do |f|
     = f.text_field :first_name
     = f.text_field :last_name
     = f.text_field :month

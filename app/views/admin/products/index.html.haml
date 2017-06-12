@@ -9,7 +9,7 @@
         %th On Hand #
         %th Price (USD)
         %th
-    - @products.each do |product|
+    - @source_models.each do |product|
       %tbody
         %tr
           %td.mdl-data-table__cell--non-numeric= product.name

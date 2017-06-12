@@ -7,7 +7,7 @@
         %th.mdl-data-table__cell--non-numeric User
         %th.mdl-data-table__cell--non-numeric State
         %th
-    - @orders.each do |order|
+    - @source_models.each do |order|
       %tbody
         %tr
           %td.mdl-data-table__cell--non-numeric= order.user

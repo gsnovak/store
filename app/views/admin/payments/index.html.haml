@@ -1,14 +1,14 @@
 .table-wrapper
   %h3 Payments
-    %table.mdl-data-table.mdl-js-data-table.mdl-shadow--8dp
-      %thead
+  %table.mdl-data-table.mdl-js-data-table.mdl-shadow--8dp
+    %thead
+      %tr
+        %th.mdl-data-table__cell--non-numeric Payment ID
+        %th Amount
+        %th
+    - @source_models.each do |payment|
+      %tbody
         %tr
-          %th.mdl-data-table__cell--non-numeric Payment ID
-          %th Amount
-          %th
-      - @payments.each do |payment|
-        %tbody
-          %tr
-            %th= payment.id
-            %td= payment.amount
-            %td.mdl-data-table__cell--non-numeric= link_to "Delete", admin_payment_path(payment), method: :delete, remote: true, data: { confirm: 'Are you certain you want to delete this?' }
+          %th= payment.id
+          %td= payment.amount
+          %td.mdl-data-table__cell--non-numeric= link_to "Delete", admin_payment_path(payment), method: :delete, remote: true, data: { confirm: 'Are you certain you want to delete this?' }
