@@ -1,0 +1,6 @@
+.form-wrapper
+  = bootstrap_form_for(@credit_card) do |f|
+    = f.text_field :first_name, value: credit_card.first_name, readonly: true
+    = f.text_field :first_name, value: credit_card.last_name, readonly: true
+    = f.text_field :month, value: credit_card.month, readonly: true
+    = f.text_field :year, value: credit_card.year, readonly: true

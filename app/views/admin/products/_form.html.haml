@@ -1,0 +1,7 @@
+.form-wrapper
+  = bootstrap_form_for [:admin, @product] do |f|
+    = f.text_field :name
+    = f.check_box :available
+    = f.text_field :on_hand_count
+    = f.text_field :price
+    = f.submit

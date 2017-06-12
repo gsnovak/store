@@ -1,0 +1,6 @@
+.form-wrapper
+  = bootstrap_form_for [:admin, @coupon] do |f|
+    = f.text_field :code
+    = f.text_field :name
+    = f.text_field :amount
+    = f.submit

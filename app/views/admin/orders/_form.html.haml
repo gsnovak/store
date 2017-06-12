@@ -1,0 +1,5 @@
+.form-wrapper
+  = bootstrap_form_for [:admin, @order] do |f|
+    = f.text_field :state
+    = f.text_field :user
+    = f.submit
