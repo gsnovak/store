@@ -6,7 +6,6 @@ class CreateProducts < ActiveRecord::Migration[5.1]
       t.integer :on_hand_count
       t.float :price
       t.references :source, polymorphic: true, index: true
-
       t.timestamps
     end
   end

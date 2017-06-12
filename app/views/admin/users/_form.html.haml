@@ -1,0 +1,9 @@
+.form-wrapper
+  = bootstrap_form_for [:admin, @source_model] do |f|
+    = f.text_field :first_name
+    = f.text_field :last_name
+    = f.text_field :user_name
+    = f.email_field :email
+    = f.password_field :password
+    = f.password_field :password_confirmation
+    = f.submit

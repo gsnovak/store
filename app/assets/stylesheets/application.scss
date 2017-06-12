@@ -1,0 +1,63 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require devise_bootstrap_views
+ /*
+ *= require rails_bootstrap_forms
+ *= require material
+ *= require_tree .
+ *= require_self
+ */
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+ @import "material";
+
+ .navbar-brand {
+   a {
+     color: #125688;
+   }
+ }
+ 
+ .navbar-default {
+   background-color: #fff;
+   height: 54px;
+   .navbar-nav li a {
+     color: #125688;
+   }
+ }
+
+ .navbar-container {
+   width: 70%;
+   margin: 0 auto;
+ }
+
+ /* ## POST CUSTOMISATIONS ## */
+
+ .form-wrapper {
+   width: 60%;
+   margin: 20px auto;
+   background-color: #fff;
+   padding: 40px;
+   border: 1px solid #eeefef;
+   border-radius: 3px;
+ }
+
+ table{
+   margin-left:auto;
+   margin-right:auto;
+   width: 100%
+ }
+ .table-wrapper {
+   margin-left:auto;
+   margin-right:auto;
+   width: 95%;
+ }

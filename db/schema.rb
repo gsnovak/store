@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607144416) do
+ActiveRecord::Schema.define(version: 20170611215429) do
 
   create_table "addresses", force: :cascade do |t|
     t.string "street_addr"
@@ -30,12 +30,12 @@ ActiveRecord::Schema.define(version: 20170607144416) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "code"
   end
 
   create_table "credit_cards", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.datetime "expiration_date"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 20170607144416) do
     t.string "first_name"
     t.string "last_name"
     t.string "user_name"
+    t.boolean "admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -1,0 +1,16 @@
+
+.table-wrapper
+  %h3 Orders
+  %table.mdl-data-table.mdl-js-data-table.mdl-shadow--8dp
+    %thead
+      %tr
+        %th.mdl-data-table__cell--non-numeric User
+        %th.mdl-data-table__cell--non-numeric State
+        %th
+    - @source_models.each do |order|
+      %tbody
+        %tr
+          %td.mdl-data-table__cell--non-numeric= order.user
+          %td.mdl-data-table__cell--non-numeric= order.state
+          %td.mdl-data-table__cell--non-numeric= link_to('Edit', edit_admin_order_path(order))
+          %td.mdl-data-table__cell--non-numeric-= link_to "Delete", admin_order_path(order), method: :delete, remote: true, data: { confirm: 'Are you certain you want to delete this?' }
