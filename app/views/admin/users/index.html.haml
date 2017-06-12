@@ -1,20 +1,20 @@
 .table-wrapper
   %h3 Users
-    %table.mdl-data-table.mdl-js-data-table.mdl-shadow--8dp
-      %thead
+  %table.mdl-data-table.mdl-js-data-table.mdl-shadow--8dp
+    %thead
+      %tr
+        %th.mdl-data-table__cell--non-numeric First Name
+        %th.mdl-data-table__cell--non-numeric Last Name
+        %th.mdl-data-table__cell--non-numeric Username
+        %th.mdl-data-table__cell--non-numeric Email
+        %th
+        %th
+    - @users.each do |user|
+      %tbody
         %tr
-          %th.mdl-data-table__cell--non-numeric First Name
-          %th.mdl-data-table__cell--non-numeric Last Name
-          %th.mdl-data-table__cell--non-numeric Username
-          %th.mdl-data-table__cell--non-numeric Email
-          %th
-          %th
-      - @users.each do |user|
-        %tbody
-          %tr
-            %td.mdl-data-table__cell--non-numeric= user.first_name
-            %td.mdl-data-table__cell--non-numeric= user.last_name
-            %td.mdl-data-table__cell--non-numeric= user.user_name
-            %td.mdl-data-table__cell--non-numeric= user.email
-            %td.mdl-data-table__cell--non-numeric= link_to 'Edit', edit_user_registration_path(user)
-            %td.mdl-data-table__cell--non-numeric-= link_to "Delete", admin_user_path(user), method: :delete, remote: true, data: { confirm: 'Are you certain you want to delete this?' }
+          %td.mdl-data-table__cell--non-numeric= user.first_name
+          %td.mdl-data-table__cell--non-numeric= user.last_name
+          %td.mdl-data-table__cell--non-numeric= user.user_name
+          %td.mdl-data-table__cell--non-numeric= user.email
+          %td.mdl-data-table__cell--non-numeric= link_to 'Edit', edit_user_registration_path(user)
+          %td.mdl-data-table__cell--non-numeric-= link_to "Delete", admin_user_path(user), method: :delete, remote: true, data: { confirm: 'Are you certain you want to delete this?' }

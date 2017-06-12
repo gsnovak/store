@@ -1,20 +1,20 @@
 .table-wrapper
   %h3 Credit Cards
-    %table.mdl-data-table.mdl-js-data-table.mdl-shadow--8dp
-      %thead
+  %table.mdl-data-table.mdl-js-data-table.mdl-shadow--8dp
+    %thead
+      %tr
+        %th.mdl-data-table__cell--non-numeric First Name
+        %th.mdl-data-table__cell--non-numeric Last Name
+        %th.mdl-data-table__cell--non-numeric Month
+        %th.mdl-data-table__cell--non-numeric Year
+        %th
+        %th
+    - @credit_cards.each do |credit_card|
+      %tbody
         %tr
-          %th.mdl-data-table__cell--non-numeric First Name
-          %th.mdl-data-table__cell--non-numeric Last Name
-          %th.mdl-data-table__cell--non-numeric Month
-          %th.mdl-data-table__cell--non-numeric Year
-          %th
-          %th
-      - @credit_cards.each do |credit_card|
-        %tbody
-          %tr
-            %td.mdl-data-table__cell--non-numeric= credit_card.first_name
-            %td.mdl-data-table__cell--non-numeric= credit_card.last_name
-            %td= credit_card.month
-            %td= credit_card.year
-            %td.mdl-data-table__cell--non-numeric= link_to 'Edit', edit_admin_credit_card_registration_path(credit_card)
-            %td.mdl-data-table__cell--non-numeric-= link_to "Delete", credit_card_admin_path(credit_card), method: :delete, remote: true, data: { confirm: 'Are you certain you want to delete this?' }
+          %td.mdl-data-table__cell--non-numeric= credit_card.first_name
+          %td.mdl-data-table__cell--non-numeric= credit_card.last_name
+          %td= credit_card.month
+          %td= credit_card.year
+          %td.mdl-data-table__cell--non-numeric= link_to 'Edit', edit_admin_credit_card_registration_path(credit_card)
+          %td.mdl-data-table__cell--non-numeric-= link_to "Delete", credit_card_admin_path(credit_card), method: :delete, remote: true, data: { confirm: 'Are you certain you want to delete this?' }
