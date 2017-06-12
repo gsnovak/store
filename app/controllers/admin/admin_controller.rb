@@ -27,7 +27,7 @@ module Admin
     end
 
     def update
-      if @source_model.update(coupon_params)
+      if @source_model.update(send("admin_#{generate_source_str_s}_path"))
         redirect_to send("admin_#{generate_source_str_p}_path")
       else
         render 'edit'
