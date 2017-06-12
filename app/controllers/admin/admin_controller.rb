@@ -2,18 +2,17 @@ module Admin
   class AdminController < ApplicationController
     before_action :authorized?
     before_action :retrieve_source_model_by_id, only: [:edit, :update, :destroy]
-    before_action :retrieve_source_table, only: [:index, :new, :create]
 
     def index
-      @source_models = @source_table.all
+      @source_models = source_klass.all
     end
 
     def new
-      @source_model = @source_table.new
+      @source_model = source_klass.new
     end
 
     def create
-      @source_model = @source_table.new(sources_path)
+      @source_model = source_klass.new(sources_path)
 
       if @source_model.save
         redirect_to sources_path
@@ -23,6 +22,7 @@ module Admin
     end
 
     def edit
+      @source_model = source_model
     end
 
     def update
@@ -56,12 +56,12 @@ module Admin
       send("admin_#{controller_name}_path")
     end
 
-    def retrieve_source_table
-      @source_table ||= controller_name.singularize.classify.constantize
+    def source_klass
+      controller_name.singularize.classify.constantize
     end
 
-    def retreive_source_model_by_id
-      @source_model ||= controller_name.singularize.classify.constantize.find(params[:id])
+    def retrieve_source_model_by_id
+      @source_model = controller_name.singularize.classify.constantize.find(params[:id])
     end
   end
 end
