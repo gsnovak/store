@@ -50,7 +50,7 @@ module Admin
 
     private
       def payment_params
-        params.require(:payment).permit(:state, :user)
+        params.require(:payment).permit(:order, :credit_card, :amount)
       end
   end
 end
