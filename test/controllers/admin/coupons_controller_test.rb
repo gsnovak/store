@@ -18,7 +18,7 @@ class Admin::CouponsControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    coupon = create(:coupon )
+    coupon = create(:coupon)
     get :edit, params: {id: coupon.id }
     assert_response :success
   end

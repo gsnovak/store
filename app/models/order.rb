@@ -7,13 +7,13 @@ class Order < ApplicationRecord
   has_one :payment
 
   self.state_machine({
-       cart: [:placed],
-       placed: [:cancelled],
-       cancelled: []
+    cart: [:placed],
+    placed: [:cancelled],
+    cancelled: []
    })
 
   before_transition_to :placed do
-    if order_items.to_a.sum {|x| x.quantity} == 0
+    if order_items.to_a.sum(&:quantity) == 0
       errors[:base] << "Order must contain at least one item"
     end
 
@@ -32,20 +32,13 @@ class Order < ApplicationRecord
       end
     end
 
-    payment = Payment.create(credit_card_id: credit_card_id, order_id: self.id, state: pending)
-    payment.amount = order_total
+    payment = create_payment(credit_card_id: credit_card_id, order_id: self.id, state: pending)
+    payment.amount = order_items.to_a.sum(&:price)
 
     unless payment.make_placed
       error[:payment] << "Error changing payment state to completed"
     end
-    unless payment.save
-      error[:payment] << "Unable to properly save payment"
-    end
-    self.total = order_items.to_a.map(&:price).inject(0, &:+)
     errors.empty?
-  end
-
-  after_transition_to :placed do
   end
 
   before_transition_to :canceled do
@@ -57,7 +50,10 @@ class Order < ApplicationRecord
       end
     end
 
-    self.payment.make_voided
+    unless payment.make_voided
+      error[:payment] << "Error changing payment state to voided"
+    end
+
     unless payment.save
       errors[:base] << "Unable to properly save #{item.source.name}"
     end

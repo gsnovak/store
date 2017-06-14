@@ -18,7 +18,7 @@ class Admin::ProductsControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    product = create(:product )
+    product = create(:product)
     get :edit, params: {id: product.id }
     assert_response :success
   end
