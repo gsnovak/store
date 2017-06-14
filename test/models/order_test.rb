@@ -7,7 +7,7 @@ class OrderTest < ActiveSupport::TestCase
   end
 
   test 'order invalid without state' do
-    #todo test valid state 
+    #todo test valid state
   end
 
 end
