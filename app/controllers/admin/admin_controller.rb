@@ -1,7 +1,7 @@
 module Admin
   class AdminController < ApplicationController
     before_action :authorized?
-    before_action :retrieve_source_model_by_id, only: [:edit, :update, :destroy]
+    before_action :retrieve_source_model_by_id, only: [:edit, :update, :destroy, :show]
 
     def index
       @source_models = source_klass.all
@@ -12,30 +12,30 @@ module Admin
     end
 
     def create
-      @source_model = source_klass.new(sources_path)
+      @source_model = source_klass.new(send("#{controller_name.singularize}_params"))
 
       if @source_model.save
         redirect_to sources_path
       else
-        render 'new'
       end
     end
 
+    def show
+    end
+
     def edit
-      @source_model = source_model
     end
 
     def update
-      if @source_model.update(source_path)
+      if @source_model.update(send("#{controller_name.singularize}_params"))
         redirect_to sources_path
       else
-        render 'edit'
+        redirect_to 'edit'
       end
     end
 
     def destroy
       @source_model.destroy
-
       redirect_to sources_path
     end
 

@@ -1,12 +1,59 @@
 class Order < ApplicationRecord
-  self.state_machine({
-    cart: [:placed, :canceled],
-    placed: [:canceled],
-    canceled: []
-  })
+  attr_accessor :credit_card_id
 
   validates :state, presence: true
   belongs_to :user
-  has_many :order_items, as: :source
-  #todo implement state transition logic
+  has_many :order_items
+  has_one :payment
+
+  self.state_machine({
+    cart: [:placed],
+    placed: [:canceled],
+    canceled: []
+   })
+
+  before_transition_to :placed do
+    if order_items.to_a.sum(&:quantity) == 0
+      errors[:base] << "Order must contain at least one item"
+    end
+
+    order_items.each do |item|
+      if item.source.on_hand_count < item.quantity
+        errors[:base] << "There is not enough #{item.name} in inventory to complete your order."
+      end
+    end
+
+    #consume the orders nom nom nom <(-.-<)
+    order_items.each do |item|
+      item.source.on_hand_count -= item.quantity
+      item.source.available = item.source.on_hand_count > 0
+      unless item.source.save
+        errors[:base] << "Unable to properly save #{item.source.name}"
+      end
+    end
+
+    payment = create_payment(credit_card_id: credit_card_id, order_id: id, state: "pending")
+    payment.amount = order_items.map(&:source).to_a.sum(&:price)
+
+    errors.empty?
+  end
+
+  before_transition_to :canceled do
+    order_items.each do |item|
+      item.source.on_hand_count += item.quantity
+      item.source.available = true
+      unless item.source.save
+        errors[:base] << "Unable to properly save #{item.source.name}"
+      end
+    end
+    if !payment.nil?
+      unless payment.make_voided
+        errors[:payment] << "Could not change payment state to voided"
+      end
+
+      unless payment.save
+        errors[:base] << "Unable to properly save #{item.source.name}"
+      end
+    end
+  end
 end

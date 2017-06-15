@@ -14,9 +14,6 @@
             %ul.dropdown-menu{:role => "menu"}
               %li
                 = link_to "All Users", admin_users_path
-              %li.divider
-              %li
-                = link_to "New User", new_admin_user_path
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
               Product
@@ -27,23 +24,6 @@
               %li.divider
               %li
                 = link_to "New Product", new_admin_product_path
-          %li.dropdown
-            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-              Payment
-              %span.caret
-            %ul.dropdown-menu{:role => "menu"}
-              %li
-                = link_to "All Payments", admin_payments_path
-          %li.dropdown
-            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-              Credit Card
-              %span.caret
-            %ul.dropdown-menu{:role => "menu"}
-              %li
-                = link_to "All Credit Cards", admin_credit_cards_path
-              %li.divider
-              %li
-                = link_to "New Credit Card", new_admin_credit_card_path
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
               Coupon
@@ -61,9 +41,6 @@
             %ul.dropdown-menu{:role => "menu"}
               %li
                 = link_to "All Orders", admin_orders_path
-              %li.divider
-              %li
-                = link_to "New Order", new_admin_order_path
           %li
             = link_to "Logout", destroy_user_session_path, method: :delete
         - else

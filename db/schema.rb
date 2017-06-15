@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170611215429) do
+ActiveRecord::Schema.define(version: 20170615192955) do
 
   create_table "addresses", force: :cascade do |t|
     t.string "street_addr"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20170611215429) do
     t.datetime "updated_at", null: false
     t.string "source_type"
     t.integer "source_id"
+    t.integer "quantity"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["source_type", "source_id"], name: "index_order_items_on_source_type_and_source_id"
   end
@@ -69,6 +70,7 @@ ActiveRecord::Schema.define(version: 20170611215429) do
     t.float "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "state"
     t.index ["credit_card_id"], name: "index_payments_on_credit_card_id"
     t.index ["order_id"], name: "index_payments_on_order_id"
   end
@@ -80,6 +82,17 @@ ActiveRecord::Schema.define(version: 20170611215429) do
     t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "state_changes", force: :cascade do |t|
+    t.string "previous_state"
+    t.string "next_state"
+    t.string "source_type"
+    t.integer "source_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "created_by_id"
+    t.index ["source_type", "source_id"], name: "index_state_changes_on_source_type_and_source_id"
   end
 
   create_table "states", force: :cascade do |t|

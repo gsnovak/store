@@ -1,4 +1,9 @@
 FactoryGirl.define do
+  factory :state_change do
+    previous_state "MyString"
+    next_state "MyString"
+    source nil
+  end
 
   sequence :email do |n|
     "person#{n}@example.com"
@@ -19,6 +24,7 @@ FactoryGirl.define do
     user_name { generate :user_name }
     email { generate :email }
     password 'password123'
+    admin true
   end
 
   factory :state do
@@ -49,6 +55,7 @@ FactoryGirl.define do
   end
 
   factory :payment do
+    state :pending
     amount '111.11'
     association :credit_card, factory: :credit_card
   end

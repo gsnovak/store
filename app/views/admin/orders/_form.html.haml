@@ -1,5 +1,8 @@
 .form-wrapper
   = bootstrap_form_for [:admin, @source_model] do |f|
-    = f.text_field :state
-    = f.text_field :user
-    = f.submit
+    = f.text_field :id, disabled: true
+    = f.text_field :state, disabled: true
+  = link_to "Back", admin_orders_path
+  %br
+  -if @source_model.state == 'placed'
+    = link_to "Cancel Order", admin_order_change_state_path(@source_model), method: :put
