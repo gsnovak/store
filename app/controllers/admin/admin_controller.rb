@@ -1,7 +1,7 @@
 module Admin
   class AdminController < ApplicationController
     before_action :authorized?
-    before_action :retrieve_source_model_by_id, only: [:edit, :update, :destroy]
+    before_action :retrieve_source_model_by_id, only: [:edit, :update, :destroy, :show]
 
     def index
       @source_models = source_klass.all
@@ -18,6 +18,9 @@ module Admin
         redirect_to sources_path
       else
       end
+    end
+
+    def show
     end
 
     def edit

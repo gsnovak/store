@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
   namespace :admin do
-    resources :users, :orders, :coupons, :credit_cards, :payments, :products
+    resources :users, :coupons, :credit_cards, :payments, :products
+    resources :orders do
+      put :change_state
+    end
   end
 
   devise_for :users, controllers: { registrations: 'registrations' }

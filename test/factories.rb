@@ -1,4 +1,9 @@
 FactoryGirl.define do
+  factory :state_change do
+    previous_state "MyString"
+    next_state "MyString"
+    source nil
+  end
 
   sequence :email do |n|
     "person#{n}@example.com"
