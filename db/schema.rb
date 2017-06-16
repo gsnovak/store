@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170615192955) do
+ActiveRecord::Schema.define(version: 20170616163502) do
 
   create_table "addresses", force: :cascade do |t|
     t.string "street_addr"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20170615192955) do
     t.string "token"
     t.integer "month"
     t.integer "year"
+    t.integer "last_four"
     t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 
@@ -115,9 +116,6 @@ ActiveRecord::Schema.define(version: 20170615192955) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "first_name"
-    t.string "last_name"
-    t.string "user_name"
     t.boolean "admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
