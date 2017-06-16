@@ -1,7 +1,6 @@
 class Order < ApplicationRecord
   attr_accessor :credit_card_id
 
-  validates :state, presence: true
   belongs_to :user
   has_many :order_items
   has_one :payment
@@ -11,6 +10,12 @@ class Order < ApplicationRecord
     placed: [:canceled],
     canceled: []
    })
+
+  def add_order_item item
+    if item.instance_of? OrderItem
+      order_items << item
+    end
+  end
 
   before_transition_to :placed do
     if order_items.to_a.sum(&:quantity) == 0

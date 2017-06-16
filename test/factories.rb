@@ -49,6 +49,7 @@ FactoryGirl.define do
     first_name 'John'
     last_name 'Doe'
     token "1233432"
+    number '654321'
     year 2017
     month 10
     association :user, factory: :user
