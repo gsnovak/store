@@ -61,7 +61,6 @@ FactoryGirl.define do
   end
 
   factory :order do
-    state :cart
     association :user, factory: :user
   end
 end

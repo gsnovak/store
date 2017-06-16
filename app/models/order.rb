@@ -12,6 +12,10 @@ class Order < ApplicationRecord
     canceled: []
    })
 
+  def add_order_item(item)
+    order_items << item if item.instance_of? OrderItem
+  end
+
   before_transition_to :placed do
     if order_items.to_a.sum(&:quantity) == 0
       errors[:base] << "Order must contain at least one item"
@@ -19,16 +23,15 @@ class Order < ApplicationRecord
 
     order_items.each do |item|
       if item.source.on_hand_count < item.quantity
-        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"
+        # errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"}
       end
     end
 
-    #consume the orders nom nom nom <(-.-<)
     order_items.each do |item|
       item.source.on_hand_count -= item.quantity
       item.source.available = item.source.on_hand_count > 0
       unless item.source.save
-        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"
+        # errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"}
       end
     end
 
@@ -43,16 +46,16 @@ class Order < ApplicationRecord
       item.source.on_hand_count += item.quantity
       item.source.available = true
       unless item.source.save
-        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"
+        # errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"}
       end
     end
     if !payment.nil?
       unless payment.make_voided
-        errors[:payment] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"
+        # errors[:payment] << payment.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"}
       end
 
       unless payment.save
-        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"
+        # errors[:base] << payment.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"}
       end
     end
   end
