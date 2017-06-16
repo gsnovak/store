@@ -19,7 +19,7 @@ class Order < ApplicationRecord
 
     order_items.each do |item|
       if item.source.on_hand_count < item.quantity
-        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"
+        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
       end
     end
 
@@ -28,11 +28,11 @@ class Order < ApplicationRecord
       item.source.on_hand_count -= item.quantity
       item.source.available = item.source.on_hand_count > 0
       unless item.source.save
-        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"
+        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
       end
     end
 
-    payment = create_payment(credit_card_id: credit_card_id, order_id: id, state: "pending")
+    payment = Payment.find_or_create_by(credit_card_id: credit_card_id, order_id: id)
     payment.amount = order_items.map(&:source).to_a.sum(&:price)
 
     errors.empty?
@@ -43,16 +43,16 @@ class Order < ApplicationRecord
       item.source.on_hand_count += item.quantity
       item.source.available = true
       unless item.source.save
-        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"
+        errors[:base] << item.source.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
       end
     end
     if !payment.nil?
       unless payment.make_voided
-        errors[:payment] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"
+        errors[:base] << payments.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
       end
 
       unless payment.save
-        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")"
+        errors[:base] << payments.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
       end
     end
   end
