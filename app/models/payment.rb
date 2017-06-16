@@ -1,8 +1,7 @@
 class Payment < ApplicationRecord
-  belongs_to :user, dependent: :destroy
   validates :amount, presence: true
   belongs_to :credit_card
-  before_destroy :in_valid_state?
+  before_destroy :valid_state?
 
   self.state_machine({
     pending: [:completed],

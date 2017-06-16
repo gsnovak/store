@@ -51,6 +51,7 @@ FactoryGirl.define do
     token "1233432"
     year 2017
     month 10
+    cc_number '654321'
     association :user, factory: :user
   end
 

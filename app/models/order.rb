@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
   attr_accessor :credit_card_id
 
-  belongs_to :user, dependent: :destroy,
+  belongs_to :user, dependent: :destroy
   has_many :order_items
   has_one :payment
 
@@ -29,7 +29,7 @@ class Order < ApplicationRecord
     order_items.each do |item|
       item.source.on_hand_count -= item.quantity
       unless item.source.save
-        item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")}"
+        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors}" }
       end
     end
 
@@ -46,16 +46,12 @@ class Order < ApplicationRecord
     order_items.each do |item|
       item.source.on_hand_count += item.quantity
       unless item.source.save
-        errors[:base] << "Unable to properly save #{item.source.name}"
+        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors}" }
       end
     end
     if !payment.nil?
       unless payment.make_voided
-        errors[:payment] << "Could not change payment state to voided"
-      end
-
-      unless payment.save
-        errors[:base] << "Unable to properly save #{item.source.name}"
+        errors[:payment] << payment.errors.map{|field, field_errors| "Unable to void payment. #{field}: #{field_errors}" }
       end
     end
     errors.empty?
