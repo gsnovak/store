@@ -1,11 +1,6 @@
 require 'test_helper'
 
 class OrderTest < ActiveSupport::TestCase
-  test 'test valid order' do
-    order = create(:order)
-    assert order.valid?
-  end
-
   test 'transition from cart to placed' do
     order = create(:order)
     product = create(:product)
