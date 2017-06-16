@@ -29,7 +29,7 @@ class Order < ApplicationRecord
     order_items.each do |item|
       item.source.on_hand_count -= item.quantity
       unless item.source.save
-        errors[:base] << "Unable to properly save #{item.source.name}"
+        item.errors.map{|field, field_errors| "#{field}: #{field_errors.join(",")}.join(", ")}"
       end
     end
 
