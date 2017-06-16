@@ -5,3 +5,4 @@
     = f.text_field :user_name, readonly: true
     = f.email_field :email, readonly: true
   = link_to "Back", admin_users_path
+  = link_to 'Add release', {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#my-modal'}

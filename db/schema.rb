@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170615192955) do
+ActiveRecord::Schema.define(version: 20170616153515) do
 
   create_table "addresses", force: :cascade do |t|
     t.string "street_addr"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20170615192955) do
     t.string "token"
     t.integer "month"
     t.integer "year"
+    t.integer "cc_last_four"
     t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 

@@ -1,1 +1,6 @@
-=render partial: 'form'
+.form-wrapper
+  = bootstrap_form_for [:admin, @source_model] do |f|
+    = f.text_field :first_name, readonly: true
+    = f.text_field :last_name, readonly: true
+    = f.text_field :user_name, readonly: true
+  = link_to "Back", admin_users_path
