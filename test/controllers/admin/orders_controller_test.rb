@@ -7,11 +7,6 @@ class Admin::OrdersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
-
   test "should get create" do
     post :create, params: { order: attributes_for(:order) }
     assert_response :success
