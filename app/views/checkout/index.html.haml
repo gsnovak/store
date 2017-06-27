@@ -1,0 +1,101 @@
+.container-fluid{ng:{controller: 'CheckoutController'}}
+  .col-sm-4
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Credit Card
+      .panel-body
+        %form.form-horizontal{ng:{init: "cc_init(#{@credit_card.to_json.html_safe})"}}
+          .form-group
+            %label.col-sm-3.control-label{for: "first-name"} First Name
+            .col-lg-8
+              %input#first-name{"ng-model" => "credit_card.first_name", class: "form-control"}
+          .form-group
+            %label.col-sm-3.control-label{for: "last-name"} Last Name
+            .col-lg-8
+              %input#last-name{"ng-model" => "credit_card.last_name", class: "form-control"}
+          .form-group
+            %label.col-sm-3.control-label{for: "cc",}Card #
+            .col-lg-8
+              %input#cc{"ng-model" => "credit_card.number", class: "form-control", placeholder: "Credit Card Number"}
+          .form-group
+            %label.col-sm-3.control-label{for: "cc",}Card CVV
+            .col-lg-8
+              %input#cc{"ng-model" => "credit_card.cvv", type: "text", class: "form-control", placeholder: "Security Code"}
+          .form-group
+            %label.col-sm-3.control-label{for: 'exp-month'} Exp. Date
+            .col-sm-9
+              .row
+                .col-xs-4
+                  %select#exp-month.form-control.col-sm-2{"ng-model" => "credit_card.month"}
+                    %option{value: "01"} January
+                    %option{value: "02"} February
+                    %option{value: "03"} March
+                    %option{value: "04"} April
+                    %option{value: "05"} May
+                    %option{value: "06"} June
+                    %option{value: "07"} July
+                    %option{value: "08"} August
+                    %option{value: "09"} September
+                    %option{value: "10"} October
+                    %option{value: "11"} November
+                    %option{value: "12"} December
+                .col-sm-4
+                  %select#exp-year.form-control.col-sm-2{"ng-model" => "credit_card.year"}
+                    %option{value: "2017"} 2017
+                    %option{value: "2018"} 2018
+                    %option{value: "2019"} 2019
+                    %option{value: "2020"} 2020
+                    %option{value: "2021"} 2021
+                    %option{value: "2022"} 2022
+          .form-group
+            .col-sm-offset-3.col-sm-12
+              %button.btn.btn-success{ng:{click:"update_cc()"}}
+                Update
+  .col-sm-4
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Billing Address
+      .panel-body
+        %form.form-horizontal{ng:{init: "address_init(#{@address.to_json.html_safe})"}}
+          .form-group
+            %label.col-sm-3.control-label{for: "street-address"} Address
+            .col-lg-8
+              %input#first-address{"ng-model" => "addr.street_addr", type: "text", class: "form-control", placeholder: "Address"}
+          .form-group
+            %label.col-sm-3.control-label{for: "state"} State
+            .col-lg-8
+              %input#state{"ng-model" => "addr.state", type: "text", class: "form-control", placeholder: "State"}
+          .form-group
+            %label.col-sm-3.control-label{for: "city",} City
+            .col-lg-8
+              %input#city{"ng-model" => "addr.city", type: "text", class: "form-control", placeholder: "City"}
+          .form-group
+            %label.col-sm-3.control-label{for: "zip",} Zip/Postal
+            .col-lg-8
+              %input#zip{"ng-model" => "addr.zip_code", type: "text", class: "form-control", placeholder: "zip/postal code" }
+          .form-group
+            .col-sm-offset-3.col-sm-12
+              %button.btn.btn-success{ng:{click:"update_address()"}}
+                Update
+  .col-sm-4
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Subtotal
+      .panel-body
+        %form.form-horizontal{ng:{init: "order_init(#{@order.to_json.html_safe})"}}
+          .form-group
+            %label.col-sm-3.control-label{for: "street-address"} Order #
+            .col-lg-8
+              %input#first-address{"ng-model" => "order.id", type: "text", class: "form-control", placeholder: "Order Number", readonly: true}
+          .row
+            .form-group{ng:{repeat:"oi in order.order_items"}}
+              %label.col-sm-3.control-label{for: "item-id"} Type
+              .col-lg-8
+                %input#first-address{"ng-model" => "oi.source_type", type: "text", class: "form-control", placeholder: "Order Number", readonly: true}
+          .form-group
+            .col-sm-offset-3.col-sm-12
+              %button.btn.btn-success{ng:{click:"complete_order()", hide: "is_placed()"}}
+                Place Order

@@ -12,6 +12,11 @@
 //= require turbolinks
 //= require jquery
 //= require jquery_ujs
+//= require angular
+//= require angular-resource
+//= require_self
 //= require bootstrap-sprockets
 //= require material
 //= require_tree .
+
+customerApp = angular.module('customerApp', ['ngResource'])

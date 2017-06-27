@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: dmqyfyvkd
+  api_key: '884562686559465'
+  api_secret: 8nQ7rjxXU0usa_gysc_PvwWzhzk
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: dmqyfyvkd
+  api_key: '884562686559465'
+  api_secret: 8nQ7rjxXU0usa_gysc_PvwWzhzk
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: dmqyfyvkd
+  api_key: '884562686559465'
+  api_secret: 8nQ7rjxXU0usa_gysc_PvwWzhzk
+  enhance_image_tag: true
+  static_image_support: false

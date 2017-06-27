@@ -12,13 +12,7 @@ class Order < ApplicationRecord
    })
 
   def order_total
-    order_items.map(&:source).to_a.sum(&:price)
-  end
-
-  def add_order_item item
-    if item.instance_of? OrderItem
-      order_items << item
-    end
+    order_items.to_a.sum{|oi| oi.source.price}
   end
 
   before_transition_to :placed do
@@ -27,6 +21,7 @@ class Order < ApplicationRecord
     end
 
     order_items.each do |item|
+      puts "Quantity: #{item.inspect}, on hand count: #{item.source.on_hand_count}"
       if item.source.on_hand_count < item.quantity
         errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
       end
@@ -44,7 +39,7 @@ class Order < ApplicationRecord
     payment.save
 
     unless payment.make_completed
-      errors[:base] << "Could not change order state to completed."
+      errors[:base] << "payment failed with #{payment.errors}"
     end
     errors.empty?
   end

@@ -26,12 +26,15 @@ gem 'material_design_lite-rails'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
+gem 'cloudinary'
 gem 'simple_form'
 gem "jquery-rails"
+gem 'angularjs-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+gem 'active_model_serializers', '0.9.3'
 gem 'haml'
 gem 'ar_state_machine', git: 'https://github.com/wantable/ar_state_machine.git'
 gem 'devise-bootstrap-views'
