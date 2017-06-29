@@ -2,25 +2,15 @@
 class Api::V1::BaseController < ApplicationController
   before_action :retrieve_source_model_by_id, only: [:edit, :update, :destroy, :show]
 
-  def index
-    @source_models = source_klass.all
-  end
-
-  def new
-    @source_model = source_klass.new
-  end
-
   def create
     @source_model = source_klass.new(send("#{controller_name.singularize}_params"))
 
     if @source_model.save
     end
-
   end
 
   def update
     if @source_model.update(send("#{controller_name.singularize}_params"))
-
     end
   end
 
