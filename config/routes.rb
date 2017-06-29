@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :orders do
-        get :cart
+         get 'cart', on: :collection, to: 'orders#cart'
       end
       resources :products
       resources :order_items do

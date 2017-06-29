@@ -7,6 +7,6 @@ class CreditCard < ApplicationRecord
   belongs_to :user
 
   def set_last_four
-    self.last_four = number[-4..-1].to_i
+    self.last_four = number[-4..-1]
   end
 end

@@ -1,14 +1,14 @@
-.product_page_thing{ng:{controller: "ProductsController"}}
-  .container{ng:{repeat:"product in products"}}
+%div{ ng: { controller: "ProductsController" }}
+  %div{ ng: { repeat: "product in products" }}
     .panel
       .panel-body
-        .row
-          .col-sm-4
-            {{product.name}}
-          .col-sm-4
-            {{product.price | currency : symbol : fractionSize}}
-          .col-sm-4
-            %button.btn.btn-primary{ng:{click: "add_to_cart(product)" }}
-              Add To Cart
-
-
+        .col-sm-4
+          %h6
+            {{ product.name }}
+        .col-sm-4
+          %h6
+            {{ product.price | currency : symbol : fractionSize }}
+        .col-sm-8
+          %image.image{ ng: { src: '{{product.image_url}}' }}
+        %button.btn.btn-success{ ng: { click:"add_to_cart(product)" }}
+          Add To Cart

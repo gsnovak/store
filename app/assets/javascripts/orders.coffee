@@ -3,7 +3,8 @@ app = angular.module('customerApp')
 app.factory('Product', ['$resource', ($resource) ->
   $resource '/api/v1/products/:id', { id: "@id" },
   'update': {
-    method: 'PUT'
+    method: 'PUT',
+    is_array: true
   }
 ])
 
@@ -13,7 +14,9 @@ app.factory('Order', ['$resource', ($resource) ->
       method: 'PUT'
     }
     'cart': {
-      method: 'GET'
+      method: 'GET',
+      is_array: false,
+      url: '/api/v1/orders/cart'
     }
 ])
 
@@ -38,7 +41,6 @@ app.factory('Address', ['$resource', ($resource) ->
     }
 ])
 
-
 app.controller 'ProductsController', ($scope, Product, OrderItem, Order) ->
   cartPromise = Order.cart().$promise
 
@@ -48,22 +50,17 @@ app.controller 'ProductsController', ($scope, Product, OrderItem, Order) ->
     else
       $scope.order = new Order()
 
-  Product.query().$promise.then (data) ->
-    $scope.products = data
+  Product.get().$promise.then (data) ->
+    $scope.products = data.products
 
-  cartPromise.then (data) ->
-    $scope.add_to_cart = (item) ->
-      console.log("Adding to cart....")
-
-      item_to_save = new OrderItem(source_id: item.id, source_type: "Product")
-      item_to_save.quantity += 1
-      item_to_save.order_id = $scope.order.id
-      item_to_save.$save()
+  $scope.add_to_cart = (item) ->
+    cartPromise.then (data) ->
+      ItemToSave = new OrderItem(source_id: item.id, source_type: "Product")
+      ItemToSave.quantity += 1
+      ItemToSave.order_id = $scope.order.id
+      ItemToSave.$save()
 
 app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCard, OrderItem) ->
-
-  Product.query().$promise.then (data) ->
-    $scope.products = data
 
   cartPromise = Order.cart().$promise
 
@@ -72,49 +69,44 @@ app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCar
       $scope.order = new Order(data.order)
     else
       $scope.order = new Order()
+    $scope.order.order_items.map (item) ->
+      new OrderItem(item)
 
-  $scope.address_init = (add) ->
-    if add?
-      $scope.addr = new Address(add)
+    $scope.isPlaced = ->
+      $scope.order.state == 'placed'
+
+  $scope.addressInit = (address) ->
+    if address.id?
+      $scope.address = new Address(address)
     else
-      $scope.addr = new Address()
+      $scope.address = new Address()
 
-  $scope.cc_init = (cc) ->
-    if cc?
-      $scope.credit_card = new CreditCard(cc)
+  $scope.ccInit = (cc) ->
+    if cc.id?
+      $scope.cc = new CreditCard(cc)
     else
-      $scope.credit_card = new CreditCard()
+      $scope.cc = new CreditCard()
 
-  $scope.update_address =  ->
-    if $scope.addr.id?
-      $scope.addr.$update()
+  $scope.updateAddress =  ->
+    if $scope.address.id?
+      $scope.address.$update()
     else
       $scope.addr.$save()
 
-  $scope.update_cc =  ->
-    if $scope.credit_card.id?
-      $scope.credit_card.$update()
+  $scope.updateCC =  ->
+    if $scope.cc.id?
+      $scope.cc.$update()
     else
-      $scope.credit_card.$save()
+      $scope.cc.$save()
 
-  $scope.update_order =  ->
+
+  $scope.completeOrder = ->
+    $scope.order.state = 'placed'
     if $scope.order.id?
       $scope.order.$update()
     else
       $scope.order.$save()
 
-  cartPromise.then (data) ->
-    $scope.is_placed = ->
-      $scope.order.state == 'placed'
 
-  $scope.complete_order = ->
-    console.log "completing order"
-    if $scope.addr.id?
-      $scope.update_address()
-    if $scope.credit_card.id?
-      $scope.update_cc()
 
-    if $scope.order.id?
-      $scope.order.$update()
-    else
-      $scope.order.$save()
+

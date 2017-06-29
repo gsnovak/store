@@ -21,7 +21,6 @@ class Order < ApplicationRecord
     end
 
     order_items.each do |item|
-      puts "Quantity: #{item.inspect}, on hand count: #{item.source.on_hand_count}"
       if item.source.on_hand_count < item.quantity
         errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
       end

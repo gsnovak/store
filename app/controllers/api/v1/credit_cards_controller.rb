@@ -6,6 +6,3 @@ class Api::V1::CreditCardsController < Api::V1::BaseController
     params.require(:credit_card).permit(:first_name, :last_name, :number, :month, :year, :last_four)
   end
 end
-
-
-

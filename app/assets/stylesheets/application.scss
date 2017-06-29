@@ -17,6 +17,7 @@
  *= require_tree .
  *= require_self
  */
+
  @import "bootstrap-sprockets";
  @import "bootstrap";
  @import "material";
@@ -26,7 +27,11 @@
      color: #125688;
    }
  }
- 
+
+ body{
+  background-image: url("");
+ }
+
  .navbar-default {
    background-color: #fff;
    height: 54px;
@@ -34,15 +39,25 @@
      color: #125688;
    }
  }
-
+  .image{
+    width: 400px;
+    margin: 0 auto;
+    max-height: 400px;
+  }
  .navbar-container {
    width: 70%;
    margin: 0 auto;
  }
 
- /* ## POST CUSTOMISATIONS ## */
-
  .form-wrapper {
+   width: 60%;
+   margin: 20px auto;
+   background-color: #fff;
+   padding: 40px;
+   border: 1px solid #eeefef;
+   border-radius: 3px;
+ }
+ .product-wrapper {
    width: 60%;
    margin: 20px auto;
    background-color: #fff;

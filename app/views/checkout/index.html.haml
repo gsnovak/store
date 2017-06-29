@@ -1,56 +1,38 @@
-.container-fluid{ng:{controller: 'CheckoutController'}}
+.container-fluid{ ng: { controller: 'CheckoutController' }}
   .col-sm-4
     .panel.panel-default
       .panel-heading
         .panel-title
           Credit Card
       .panel-body
-        %form.form-horizontal{ng:{init: "cc_init(#{@credit_card.to_json.html_safe})"}}
+        %form.form-horizontal{ ng: { init: "ccInit(#{@credit_card.to_json.html_safe})" }}
           .form-group
             %label.col-sm-3.control-label{for: "first-name"} First Name
             .col-lg-8
-              %input#first-name{"ng-model" => "credit_card.first_name", class: "form-control"}
+              %input#first-name{ ng: { model: "cc.first_name" }, class: "form-control" }
           .form-group
             %label.col-sm-3.control-label{for: "last-name"} Last Name
             .col-lg-8
-              %input#last-name{"ng-model" => "credit_card.last_name", class: "form-control"}
+              %input#last-name{ ng: { model: "cc.last_name"}, class: "form-control" }
           .form-group
             %label.col-sm-3.control-label{for: "cc",}Card #
             .col-lg-8
-              %input#cc{"ng-model" => "credit_card.number", class: "form-control", placeholder: "Credit Card Number"}
+              %input#cc{ ng: { model: "cc.number"}, class: "form-control", placeholder: "Credit Card Number" }
           .form-group
-            %label.col-sm-3.control-label{for: "cc",}Card CVV
+            %label.col-sm-3.control-label{for: "cc",} Card CVV
             .col-lg-8
-              %input#cc{"ng-model" => "credit_card.cvv", type: "text", class: "form-control", placeholder: "Security Code"}
+              %input#cc{ ng: { model: "cc.cvv" , type: "text" }, class: "form-control", placeholder: "Security Code" }
           .form-group
             %label.col-sm-3.control-label{for: 'exp-month'} Exp. Date
             .col-sm-9
               .row
-                .col-xs-4
-                  %select#exp-month.form-control.col-sm-2{"ng-model" => "credit_card.month"}
-                    %option{value: "01"} January
-                    %option{value: "02"} February
-                    %option{value: "03"} March
-                    %option{value: "04"} April
-                    %option{value: "05"} May
-                    %option{value: "06"} June
-                    %option{value: "07"} July
-                    %option{value: "08"} August
-                    %option{value: "09"} September
-                    %option{value: "10"} October
-                    %option{value: "11"} November
-                    %option{value: "12"} December
-                .col-sm-4
-                  %select#exp-year.form-control.col-sm-2{"ng-model" => "credit_card.year"}
-                    %option{value: "2017"} 2017
-                    %option{value: "2018"} 2018
-                    %option{value: "2019"} 2019
-                    %option{value: "2020"} 2020
-                    %option{value: "2021"} 2021
-                    %option{value: "2022"} 2022
+                .col-sm-3
+                  = wrapped_angular_select_month('cc.month', "ng-required" => true)
+                .col-sm-3
+                  = wrapped_angular_select_year('cc.year', "ng-required" => true)
           .form-group
             .col-sm-offset-3.col-sm-12
-              %button.btn.btn-success{ng:{click:"update_cc()"}}
+              %button.btn.btn-success{ ng: { click:"updateCC(cc)" }}
                 Update
   .col-sm-4
     .panel.panel-default
@@ -58,26 +40,26 @@
         .panel-title
           Billing Address
       .panel-body
-        %form.form-horizontal{ng:{init: "address_init(#{@address.to_json.html_safe})"}}
+        %form.form-horizontal{ ng: { init: "addressInit(#{@address.to_json.html_safe})" }}
           .form-group
             %label.col-sm-3.control-label{for: "street-address"} Address
             .col-lg-8
-              %input#first-address{"ng-model" => "addr.street_addr", type: "text", class: "form-control", placeholder: "Address"}
+              %input#first-address{ ng: { model: "address.street_addr" }, type: "text", class: "form-control", placeholder: "Address" }
           .form-group
             %label.col-sm-3.control-label{for: "state"} State
             .col-lg-8
-              %input#state{"ng-model" => "addr.state", type: "text", class: "form-control", placeholder: "State"}
+              = select_tag("address.state_id", options_for_select(@states.collect{ |u| [u.abbreviation, u.id] }), { 'ng-model' => "address.state_id", 'ng-init'=> "", class: "form-control" })
           .form-group
             %label.col-sm-3.control-label{for: "city",} City
             .col-lg-8
-              %input#city{"ng-model" => "addr.city", type: "text", class: "form-control", placeholder: "City"}
+              %input#city{ ng: { model: "address.city"}, type: "text", class: "form-control", placeholder: "City" }
           .form-group
             %label.col-sm-3.control-label{for: "zip",} Zip/Postal
             .col-lg-8
-              %input#zip{"ng-model" => "addr.zip_code", type: "text", class: "form-control", placeholder: "zip/postal code" }
+              %input#zip{ ng: { model: "address.zip_code" }, type: "text", class: "form-control", placeholder: "zip/postal code" }
           .form-group
             .col-sm-offset-3.col-sm-12
-              %button.btn.btn-success{ng:{click:"update_address()"}}
+              %button.btn.btn-success{ ng: { click:"updateAddress(address)" }}
                 Update
   .col-sm-4
     .panel.panel-default
@@ -85,17 +67,32 @@
         .panel-title
           Subtotal
       .panel-body
-        %form.form-horizontal{ng:{init: "order_init(#{@order.to_json.html_safe})"}}
-          .form-group
-            %label.col-sm-3.control-label{for: "street-address"} Order #
-            .col-lg-8
-              %input#first-address{"ng-model" => "order.id", type: "text", class: "form-control", placeholder: "Order Number", readonly: true}
-          .row
-            .form-group{ng:{repeat:"oi in order.order_items"}}
-              %label.col-sm-3.control-label{for: "item-id"} Type
-              .col-lg-8
-                %input#first-address{"ng-model" => "oi.source_type", type: "text", class: "form-control", placeholder: "Order Number", readonly: true}
-          .form-group
-            .col-sm-offset-3.col-sm-12
-              %button.btn.btn-success{ng:{click:"complete_order()", hide: "is_placed()"}}
-                Place Order
+        %table.table
+          %thead
+            %tr
+              %th Name
+              %th Price
+              %th Quantity
+          %tbody
+            %tr{ng:{repeat: "item in order.order_items" }}
+              %td
+                {{ item.source.name }}
+              %td
+                {{ item.source.price |  currency : symbol : fractionSize }}
+              %td
+                {{ item.quantity }}
+        .col-sm-8
+          %label.total
+            Total:
+        %br
+        %br
+        .col-sm-8
+          %button.btn.btn-primary{ ng: { click:"CompleteOrder(Order)" }}
+            Complete
+
+
+
+
+
+
+
