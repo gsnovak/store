@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  root 'devise/sessions#new'
-
   namespace :api do
     namespace :v1 do
       resources :orders do
