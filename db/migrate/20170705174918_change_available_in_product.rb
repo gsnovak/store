@@ -1,5 +1,6 @@
 class ChangeAvailableInProduct < ActiveRecord::Migration[5.1]
   def change
-    change_column :products, :available, :boolean
+    remove_column :products, :available
+    add_column :products, :available, :boolean
   end
 end
