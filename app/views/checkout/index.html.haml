@@ -1,0 +1,107 @@
+.container-fluid{ ng: { controller: 'CheckoutController' }}
+  .col-sm-4
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Credit Card
+      .panel-body
+        %form.form-horizontal{ ng: { init: "ccInit(#{@credit_card.to_json.html_safe})" }}
+          .form-group
+            %label.col-sm-3.control-label{ for: "first-name" } First Name
+            .col-lg-8
+              %input#first-name{ ng: { model: "cc.first_name", disabled: "!editingCC || orderCompleted()" }, class: "form-control" }
+          .form-group
+            %label.col-sm-3.control-label{ for: "last-name" } Last Name
+            .col-lg-8
+              %input#last-name{ ng: { model: "cc.last_name", disabled: "!editingCC || orderCompleted()" }, class: "form-control" }
+          .form-group
+            %label.col-sm-3.control-label{ for: "cc" } Card #
+            .col-lg-8
+              %input#cc{ ng: { model: "cc.number", disabled: "!editingCC || orderCompleted()" }, class: "form-control", placeholder: "Credit Card Number" }
+          .form-group
+            %label.col-sm-3.control-label{for: "cc",} Card CVV
+            .col-lg-8
+              %input#cc{ ng: { model: "cc.cvv" , type: "text", disabled: "!editingCC || orderCompleted()" }, class: "form-control", placeholder: "Security Code" }
+          .form-group
+            %label.col-sm-3.control-label{ for: 'exp-month'} Exp. Date
+            .col-sm-9
+              .row
+                %div{ ng: { disabled: "!editingCC" }}
+                  .col-sm-3
+                    = wrapped_angular_select_month('cc.month', "ng-disabled" => "!editingCC || orderCompleted()")
+                  .col-sm-3
+                    = wrapped_angular_select_year('cc.year', "ng-disabled" => "!editingCC || orderCompleted()")
+      .panel-footer
+        %button.btn.btn-success.pull-right{ ng: { click: "updateCC(cc)", hide: "!editingCC" }}
+          %span{class: 'icon', ng: { if: "savingAddress" }}
+          Update
+        %button.btn.btn-success.pull-right{ ng: { click: "editCC()", hide: "editingCC" }}
+          Edit
+        .clearfix
+  .col-sm-4
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Billing Address
+      .panel-body
+        %form.form-horizontal{ ng: { init: "addressInit(#{@address.to_json.html_safe})" }}
+          .form-group
+            %label.col-sm-3.control-label{for: "street-address"} Address
+            .col-lg-8
+              %input#first-address{ ng: { model: "address.street_addr", disabled: "!editingAddress || orderCompleted()" }, type: "text", class: "form-control", placeholder: "Address" }
+          .form-group
+            %label.col-sm-3.control-label{for: "state"} State
+            .col-lg-8
+              / = select_tag("address.state_id", options_for_select(@states.collect{ |u| [u.abbreviation, u.id]  }), { 'ng-model' => "address.state_id", 'ng-init'=> "", class: "form-control" })
+          .form-group
+            %label.col-sm-3.control-label{for: "city",} City
+            .col-lg-8
+              %input#city{ ng: { model: "address.city", disabled: "!editingAddress" }, type: "text", class: "form-control", placeholder: "City" }
+          .form-group
+            %label.col-sm-3.control-label{for: "zip",} Zip/Postal
+            .col-lg-8
+              %input#zip{ ng: { model: "address.zip_code", disabled: "!editingAddress" }, type: "text", class: "form-control", placeholder: "zip/postal code" }
+          .form-group
+            .col-sm-offset-3.col-sm-12
+      .panel-footer
+        %button.btn.btn-success.pull-right{ ng: { click: "updateAddress(address)", hide: "!editingAddress" }}
+          Update
+        %button.btn.btn-success.pull-right{ ng: { click: "editAddress()", hide: "editingAddress" }}
+          Edit
+        .clearfix
+  .col-sm-4
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Subtotal
+      .panel-body
+        %table.table
+          %thead
+            %tr
+              %th Name
+              %th Price
+              %th Quantity
+          %tbody
+            %tr{ ng: { repeat: "item in order.order_items" }}
+              %td
+                {{ item.source.name }}
+              %td
+                {{ item.source.price |  currency : symbol : fractionSize }}
+              %td
+                {{ item.quantity }}
+              %td
+                %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { click: "removeFromCart(item)", hide: "orderCompleted()"}}
+      .panel-footer
+        %button.btn.btn-primary.pull-right{ ng: { click: "CompleteOrder(Order)" }}
+          Complete
+        .clearfix
+
+
+
+
+
+
+
+
+
+

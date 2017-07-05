@@ -9,9 +9,13 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
-//= require turbolinks
 //= require jquery
 //= require jquery_ujs
+//= require underscore-min
+//= require angular
+//= require angular-resource
+//= require_self
 //= require bootstrap-sprockets
-//= require material
 //= require_tree .
+
+customerApp = angular.module('customerApp', ['ngResource'])

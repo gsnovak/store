@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616172135) do
+ActiveRecord::Schema.define(version: 20170629205746) do
 
   create_table "addresses", force: :cascade do |t|
     t.string "street_addr"
-    t.string "state"
     t.string "city"
-    t.integer "zip_code"
+    t.string "zip_code"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -40,9 +39,9 @@ ActiveRecord::Schema.define(version: 20170616172135) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "token"
-    t.integer "month"
-    t.integer "year"
-    t.integer "last_four"
+    t.string "month"
+    t.string "year"
+    t.string "last_four"
     t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 
@@ -83,6 +82,8 @@ ActiveRecord::Schema.define(version: 20170616172135) do
     t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_id"
+    t.string "image_url"
   end
 
   create_table "state_changes", force: :cascade do |t|
