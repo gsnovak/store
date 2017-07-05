@@ -31,6 +31,7 @@ gem 'carrierwave', '~> 1.0'
 gem 'simple_form'
 gem "jquery-rails"
 gem 'angularjs-rails'
+gem 'pg'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
