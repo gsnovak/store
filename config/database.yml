@@ -11,6 +11,8 @@ test:
 
 production:
   adapter: postgresql
-  database: my_database_production
-  pool: 5
-  timeout: 5000
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: 30
+  url: <%= ENV["DATABASE_URL"] %>
