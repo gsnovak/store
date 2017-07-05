@@ -6,6 +6,9 @@ class Api::V1::BaseController < ApplicationController
     @source_model = source_klass.new(send("#{controller_name.singularize}_params"))
 
     if @source_model.save
+      flash[:success] = "#{source_klass} create successful."
+    else
+      flash[:alert] = "Unable to create #{source_klass}."
     end
   end
 
