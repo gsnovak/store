@@ -28,6 +28,13 @@
    }
  }
 
+ .icon-button {
+    appearance: none;
+    outline: none;
+    border: 0;
+    background: transparent;
+}
+
  body{
   background-image: url("");
  }

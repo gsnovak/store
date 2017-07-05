@@ -38,7 +38,10 @@ class Order < ApplicationRecord
     payment.save
 
     unless payment.make_completed
-      errors[:base] << "payment failed with #{payment.errors}"
+        payment.errors.full_messages.each do |msg|
+          errors[:base] << "Payment Error: #{msg}"
+        end
+      end
     end
     errors.empty?
   end

@@ -9,31 +9,35 @@
           .form-group
             %label.col-sm-3.control-label{for: "first-name"} First Name
             .col-lg-8
-              %input#first-name{ ng: { model: "cc.first_name" }, class: "form-control" }
+              %input#first-name{ ng: { model: "cc.first_name", disabled: "!editingCC"}, class: "form-control" }
           .form-group
             %label.col-sm-3.control-label{for: "last-name"} Last Name
             .col-lg-8
-              %input#last-name{ ng: { model: "cc.last_name"}, class: "form-control" }
+              %input#last-name{ ng: { model: "cc.last_name", disabled: "!editingCC" }, class: "form-control" }
           .form-group
             %label.col-sm-3.control-label{for: "cc",}Card #
             .col-lg-8
-              %input#cc{ ng: { model: "cc.number"}, class: "form-control", placeholder: "Credit Card Number" }
+              %input#cc{ ng: { model: "cc.number", disabled: "!editingCC"}, class: "form-control", placeholder: "Credit Card Number" }
           .form-group
             %label.col-sm-3.control-label{for: "cc",} Card CVV
             .col-lg-8
-              %input#cc{ ng: { model: "cc.cvv" , type: "text" }, class: "form-control", placeholder: "Security Code" }
+              %input#cc{ ng: { model: "cc.cvv" , type: "text", disabled: "!editingCC" }, class: "form-control", placeholder: "Security Code" }
           .form-group
             %label.col-sm-3.control-label{for: 'exp-month'} Exp. Date
             .col-sm-9
               .row
-                .col-sm-3
-                  = wrapped_angular_select_month('cc.month', "ng-required" => true)
-                .col-sm-3
-                  = wrapped_angular_select_year('cc.year', "ng-required" => true)
-          .form-group
-            .col-sm-offset-3.col-sm-12
-              %button.btn.btn-success{ ng: { click:"updateCC(cc)" }}
-                Update
+                %div{ ng: {disabled: "!editingCC"}}
+                  .col-sm-3
+                    = wrapped_angular_select_month('cc.month', "ng-disabled" => "!editingCC")
+                  .col-sm-3
+                    = wrapped_angular_select_year('cc.year', "ng-disabled" => "!editingCC")
+      .panel-footer
+        %button.btn.btn-success.pull-right{ ng: { click:"updateCC(cc)", hide: "!editingCC" }}
+          %span{class: 'icon', ng: { if: "savingAddress" }}
+          Update
+        %button.btn.btn-success.pull-right{ ng: { click:"editCC()", hide: "editingCC" }}
+          Edit
+        .clearfix
   .col-sm-4
     .panel.panel-default
       .panel-heading
@@ -44,23 +48,27 @@
           .form-group
             %label.col-sm-3.control-label{for: "street-address"} Address
             .col-lg-8
-              %input#first-address{ ng: { model: "address.street_addr" }, type: "text", class: "form-control", placeholder: "Address" }
+              %input#first-address{ ng: { model: "address.street_addr", disabled: "!editingAddress || orderCompleted()" }, type: "text", class: "form-control", placeholder: "Address" }
           .form-group
             %label.col-sm-3.control-label{for: "state"} State
             .col-lg-8
-              = select_tag("address.state_id", options_for_select(@states.collect{ |u| [u.abbreviation, u.id] }), { 'ng-model' => "address.state_id", 'ng-init'=> "", class: "form-control" })
+              / = select_tag("address.state_id", options_for_select(@states.collect{ |u| [u.abbreviation, u.id]  }), { 'ng-model' => "address.state_id", 'ng-init'=> "", class: "form-control" })
           .form-group
             %label.col-sm-3.control-label{for: "city",} City
             .col-lg-8
-              %input#city{ ng: { model: "address.city"}, type: "text", class: "form-control", placeholder: "City" }
+              %input#city{ ng: { model: "address.city", disabled: "!editingAddress" }, type: "text", class: "form-control", placeholder: "City" }
           .form-group
             %label.col-sm-3.control-label{for: "zip",} Zip/Postal
             .col-lg-8
-              %input#zip{ ng: { model: "address.zip_code" }, type: "text", class: "form-control", placeholder: "zip/postal code" }
+              %input#zip{ ng: { model: "address.zip_code", disabled: "!editingAddress" }, type: "text", class: "form-control", placeholder: "zip/postal code" }
           .form-group
             .col-sm-offset-3.col-sm-12
-              %button.btn.btn-success{ ng: { click:"updateAddress(address)" }}
-                Update
+      .panel-footer
+        %button.btn.btn-success.pull-right{ ng: { click:"updateAddress(address)", hide: "!editingAddress" }}
+          Update
+        %button.btn.btn-success.pull-right{ ng: { click:"editAddress()", hide: "editingAddress" }}
+          Edit
+        .clearfix
   .col-sm-4
     .panel.panel-default
       .panel-heading
@@ -74,21 +82,22 @@
               %th Price
               %th Quantity
           %tbody
-            %tr{ng:{repeat: "item in order.order_items" }}
+            %tr{ ng: { repeat: "item in order.order_items" }}
               %td
                 {{ item.source.name }}
               %td
                 {{ item.source.price |  currency : symbol : fractionSize }}
               %td
                 {{ item.quantity }}
-        .col-sm-8
-          %label.total
-            Total:
-        %br
-        %br
-        .col-sm-8
-          %button.btn.btn-primary{ ng: { click:"CompleteOrder(Order)" }}
-            Complete
+              %td
+                %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { click:"removeFromCart(item)", hide: "orderCompleted()"}}
+      .panel-footer
+        %button.btn.btn-primary.pull-right{ ng: { click:"CompleteOrder(Order)" }}
+          Complete
+        .clearfix
+
+
+
 
 
 

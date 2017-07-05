@@ -11,6 +11,9 @@ class Api::V1::BaseController < ApplicationController
 
   def update
     if @source_model.update(send("#{controller_name.singularize}_params"))
+       flash[:success] = "#{source_klass} save successful."
+    else
+       flash[:alert] = "Unable to save the item."
     end
   end
 
