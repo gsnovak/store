@@ -14,6 +14,7 @@ class Api::V1::BaseController < ApplicationController
     unless @source_model.update(send("#{controller_name.singularize}_params"))
       render status: 400, json: @source_model.errors.full_messages
     end
+    puts @source_model.errors.full_messages
   end
 
   def destroy
