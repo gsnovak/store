@@ -12,13 +12,13 @@ class Api::V1::BaseController < ApplicationController
 
   def update
     unless @source_model.update(send("#{controller_name.singularize}_params"))
-      render status: 400, json: @source_model.errors
+      render status: 400, json: @source_model.errors.full_messages
     end
   end
 
   def destroy
     unless @source_model.destroy
-      render status: 400, json: @source_model.errors
+      render status: 400, json: @source_model.errors.full_messages
     end
 
     redirect_to sources_path

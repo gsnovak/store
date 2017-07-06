@@ -59,7 +59,6 @@ app.controller 'ProductsController', ($scope, Product, OrderItem, Order, $window
 
   $scope.addToCart = (item) ->
     cartPromise.then (data) ->
-      console.log "adding"
       return if _.findWhere($scope.order.order_items, {id: item.id })?
       ItemToSave = new OrderItem(source_id: item.id, quantity: 1000, source_type: "Product")
       ItemToSave.order_id = $scope.order.id
@@ -90,7 +89,6 @@ app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCar
 
   $scope.removeFromCart = (item) ->
     itemToDelete = new OrderItem(item)
-    console.log(itemToDelete)
     itemToDelete.$delete()
 
   $scope.ccInit = (cc) ->
@@ -110,9 +108,9 @@ app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCar
 
     promise
       .then ->
-        console.log "success"
-      .catch ->
-        console.log "error"
+        delete $scope.addressErrors
+      .catch (result) ->
+        $scope.addressErrors = result.data.address
       .finally ->
         $scope.savingAddress = false
         $scope.editingAddress = false
@@ -128,9 +126,9 @@ app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCar
 
     promise
       .then ->
-        console.log "success"
+        delete $scope.ccErrors
       .catch (result) ->
-        console.log "error"
+        $scope.ccErrors = result.data.credit_cards
       .finally ->
         $scope.savingCC = false
         $scope.editingCC = false
@@ -144,9 +142,9 @@ app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCar
     $scope.order.state = 'placed'
     $scope.order.$save()
     .then ->
-      console.log "success"
+      delete $scope.orderErrors
     .catch (result) ->
-      console.log "error"
+      $scope.orderErrors = result.data.orders
     .finally ->
       $scope.savingOrder = false
       $scope.editingOrder = false

@@ -5,6 +5,10 @@
         .panel-title
           Credit Card
       .panel-body
+        .alert.alert-danger{ ng: { if: 'ccErrors' }}
+          %ul{ ng: { repeat: "val in ccErrors" }}
+            %li
+              {{ val }}
         %form.form-horizontal{ ng: { init: "ccInit(#{@credit_card.to_json.html_safe})" }}
           .form-group
             %label.col-sm-3.control-label{ for: "first-name" } First Name
@@ -44,6 +48,10 @@
         .panel-title
           Billing Address
       .panel-body
+        .alert.alert-danger{ ng: { if: 'addressErrors' }}
+          %ul{ ng: { repeat: "val in addressErrors" }}
+            %li
+              {{ val }}
         %form.form-horizontal{ ng: { init: "addressInit(#{@address.to_json.html_safe})" }}
           .form-group
             %label.col-sm-3.control-label{for: "street-address"} Address
@@ -75,6 +83,10 @@
         .panel-title
           Subtotal
       .panel-body
+        .alert.alert-danger{ ng: { if: 'orderErrors' }}
+          %ul{ ng: { repeat: "val in orderErrors" }}
+            %li
+              {{ val }}
         %table.table
           %thead
             %tr
