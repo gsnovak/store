@@ -41,7 +41,7 @@ app.factory('Address', ['$resource', ($resource) ->
     }
 ])
 
-app.controller 'ProductsController', ($scope, Product, OrderItem, Order, $window) ->
+app.controller 'ProductsController', ['$scope', 'Product', 'OrderItem', 'Order', '$window', ($scope, Product, OrderItem, Order, $window) ->
   cartPromise = Order.cart().$promise
 
   cartPromise.then (data) ->
@@ -63,8 +63,9 @@ app.controller 'ProductsController', ($scope, Product, OrderItem, Order, $window
       ItemToSave = new OrderItem(source_id: item.id, quantity: 1000, source_type: "Product")
       ItemToSave.order_id = $scope.order.id
       ItemToSave.$save()
+]
 
-app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCard, OrderItem) ->
+app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'CreditCard', 'OrderItem', ($scope, Product, Order, Address, CreditCard, OrderItem) ->
 
   Order.cart().$promise.then (data) ->
     if data?
@@ -149,7 +150,6 @@ app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCar
       $scope.savingOrder = false
       $scope.editingOrder = false
       $scope.orderCompleted = true
-
-
+]
 
 

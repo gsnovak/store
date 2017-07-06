@@ -15,19 +15,3 @@
               %button.btn.btn-success{ ng: { click:"addToCart(product)" }}
                 Add To Cart
               %input.input-sm{ type: "number", ng: { model: "product.quantity" }}
-
-          / .row
-          /   .col-sm-4
-          /     %h6
-          /       {{ product.name }}
-          /   .col-sm-4
-          /     %h6
-          /       {{ product.price | currency : symbol : fractionSize }}
-          / .row
-          /   .col-sm-4
-          /     %image.image{ ng: { src: "{{ product.picture_url }}" }}
-          / .row
-          /   .col-sm-4
-          /     %button.btn.btn-success{ ng: { click:"addToCart(product)" }}
-          /       Add To Cart
-          /     %input.input-sm{ type: "number", ng: { model: "product.quantity" }}
