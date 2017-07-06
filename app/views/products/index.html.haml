@@ -1,20 +1,20 @@
 %div{ ng: { controller: "ProductsController" }}
-  %div{ ng: { repeat: "item in order.order_items" }}
+  %div{ ng: { repeat: "product in products" }}
     .container
       .panel
         .panel-body
           .row
             .col-sm-4
               %h6
-                {{ item.source.name }}
+                {{ product.name }}
             .col-sm-4
               %h6
-                {{ product.source.price | currency : symbol : fractionSize }}
+                {{ product.price | currency : symbol : fractionSize }}
           .row
             .col-sm-4
-              %image.image{ ng: { src: "{{ item.image_url }}" }}
+              %image.image{ ng: { src: "{{ product.picture_url }}" }}
           .row
             .col-sm-4
-              %button.btn.btn-success{ ng: { click:"add_to_cart(item)" }}
+              %button.btn.btn-success{ ng: { click:"addToCart(product)" }}
                 Add To Cart
-              %input.input-sm{ type: "number", ng: { model: "item.quantity" }}
+              %input.input-sm{ type: "number", ng: { model: "product.quantity" }}

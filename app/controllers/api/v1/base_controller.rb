@@ -5,23 +5,22 @@ class Api::V1::BaseController < ApplicationController
   def create
     @source_model = source_klass.new(send("#{controller_name.singularize}_params"))
 
-    if @source_model.save
-      flash[:success] = "#{source_klass} create successful."
-    else
-      flash[:alert] = "Unable to create #{source_klass}."
+    unless @source_model.save
+      render status: 400, json: @source_model.errors
     end
   end
 
   def update
-    if @source_model.update(send("#{controller_name.singularize}_params"))
-       flash[:success] = "#{source_klass} save successful."
-    else
-       flash[:alert] = "Unable to save the item."
+    unless @source_model.update(send("#{controller_name.singularize}_params"))
+      render status: 400, json: @source_model.errors
     end
   end
 
   def destroy
-    @source_model.destroy
+    unless @source_model.destroy
+      render status: 400, json: @source_model.errors
+    end
+
     redirect_to sources_path
   end
 

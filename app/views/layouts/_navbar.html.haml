@@ -10,3 +10,6 @@
           = link_to "Shop", products_path
         %li
           = link_to "Cart", checkout_index_path
+        -if current_user&.admin?
+          %li
+            = link_to "Admin Dashboard", admin_products_path

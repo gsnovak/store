@@ -53,10 +53,15 @@ app.controller 'ProductsController', ($scope, Product, OrderItem, Order, $window
     $scope.order.order_items.map (item) ->
       new OrderItem(item)
 
+  Product.get().$promise.then (data) ->
+      $scope.products = data.products
+
+
   $scope.addToCart = (item) ->
     cartPromise.then (data) ->
+      console.log "adding"
       return if _.findWhere($scope.order.order_items, {id: item.id })?
-      ItemToSave = new OrderItem(source_id: item.id, source_type: "Product")
+      ItemToSave = new OrderItem(source_id: item.id, quantity: 1000, source_type: "Product")
       ItemToSave.order_id = $scope.order.id
       ItemToSave.$save()
 
@@ -101,7 +106,7 @@ app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCar
     if $scope.address.id?
       promise = $scope.address.$update()
     else
-      promise = $scope.address.save()
+      promise = $scope.address.$save()
 
     promise
       .then ->
