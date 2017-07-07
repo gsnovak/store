@@ -62,7 +62,12 @@ app.controller 'ProductsController', ['$scope', 'Product', 'OrderItem', 'Order',
       return if _.findWhere($scope.order.order_items, {id: item.id })?
       ItemToSave = new OrderItem(source_id: item.id, quantity: 1000, source_type: "Product")
       ItemToSave.order_id = $scope.order.id
+
       ItemToSave.$save()
+      .then ->
+        $scope.saveSuccess = true
+      .catch (result) ->
+        $scope.productErrors = result.errors.product
 ]
 
 app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'CreditCard', 'OrderItem', ($scope, Product, Order, Address, CreditCard, OrderItem) ->
@@ -88,7 +93,9 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
     else
       $scope.address = new Address()
 
-  $scope.removeFromCart = (item) ->
+  $scope.removeFromCart = (item, index) ->
+    $scope.order.order_items.splice(index, 1)
+
     itemToDelete = new OrderItem(item)
     itemToDelete.$delete()
 
