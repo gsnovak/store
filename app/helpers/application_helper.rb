@@ -25,7 +25,6 @@ module ApplicationHelper
   end
 
   def wrapped_angular_select(scoped_name, select_options, input_options={}, override_name=nil)
-    # https://github.com/angular/angular.js/issues/1019 ng-init adds ng-selected option on select input
     model_name, name = split_some_scopes(scoped_name)
     select_tag(name, options_for_select(select_options), { 'ng-model' => scoped_name, 'ng-init'=> "", class: "form-control" }.merge(input_options))
   end
