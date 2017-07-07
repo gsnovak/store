@@ -6,7 +6,7 @@ class Api::V1::BaseController < ApplicationController
     @source_model = source_klass.new(send("#{controller_name.singularize}_params"))
 
     unless @source_model.save
-      render status: 400, json: @source_model.errors
+      render status: 400, json: @source_model.errors.full_messages
     end
   end
 
