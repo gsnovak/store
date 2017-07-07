@@ -9,7 +9,6 @@ class OrderTest < ActiveSupport::TestCase
     order.save
 
     order_item = OrderItem.create(order_id: order.id, source_type: Product.name, source_id: product.id, quantity: 10)
-    order.add_order_item(order_item)
 
     assert order.make_placed
   end
@@ -19,7 +18,6 @@ class OrderTest < ActiveSupport::TestCase
     product = create(:product)
 
     order_item = OrderItem.create(order_id: order.id, source_type: Product.name, source_id: product.id, quantity: 10)
-    order.add_order_item(order_item)
 
     assert_not order.make_canceled
   end
@@ -32,7 +30,6 @@ class OrderTest < ActiveSupport::TestCase
     order.save
 
     order_item = OrderItem.create(order_id: order.id, source_type: Product.name, source_id: product.id, quantity: 0)
-    order.add_order_item(order_item)
 
     assert_not order.make_placed
   end
@@ -45,7 +42,6 @@ class OrderTest < ActiveSupport::TestCase
     order.save
 
     order_item = OrderItem.create(order_id: order.id, source_type: Product.name, source_id: product.id, quantity: 15)
-    order.order_items << order_item
 
     assert_not order.make_placed
   end
@@ -53,13 +49,11 @@ class OrderTest < ActiveSupport::TestCase
   test 'properly removes inventory' do
     order = create(:order)
     product = create(:product)
-    cc = create(:credit_card)
-    order.user.credit_card = cc
+    cc = create(:credit_card, user_id: order.user.id)
     order.save
 
     started_with = product.on_hand_count
     order_item = OrderItem.create(order_id: order.id, source_type: Product.name, source_id: product.id, quantity: 15)
-    order.add_order_item << order_item
 
     order.make_placed
 

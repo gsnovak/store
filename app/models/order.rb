@@ -23,12 +23,12 @@ class Order < ApplicationRecord
 
     order_items.each do |item|
       if item.source.on_hand_count < item.quantity
-        errors[:base] << "There's not enough inventory to fullfill order!"
+        errors[:base] << "There's not enough inventory to fulfill order!"
       end
     end
 
     order_items.each do |item|
-      item.source.on_hand_count = item.source.on_hand_count - item.quantity
+      item.source.on_hand_count -= item.quantity
       unless item.source.save
         errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
       end
@@ -64,5 +64,5 @@ class Order < ApplicationRecord
       end
     end
     errors.empty?
-  endssss
+  end
 end
