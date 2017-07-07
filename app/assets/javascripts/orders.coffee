@@ -88,6 +88,7 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
     $scope.editingAddress = true;
 
   $scope.addressInit = (address) ->
+    address.state_id = address.state_id.toString() if address.state_id?
     $scope.address = new Address(address)
 
   $scope.ccInit = (cc) ->

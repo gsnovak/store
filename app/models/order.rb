@@ -3,7 +3,8 @@ class Order < ApplicationRecord
 
   belongs_to :user
   has_many :order_items
-  has_one :payment
+  has_one :payment,
+          inverse_of: :order
 
   self.state_machine({
     cart: [:placed],
@@ -22,12 +23,12 @@ class Order < ApplicationRecord
 
     order_items.each do |item|
       if item.source.on_hand_count < item.quantity
-        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
+        errors[:base] << "There's not enough inventory to fullfill order!"
       end
     end
 
     order_items.each do |item|
-      item.source.on_hand_count -= item.quantity
+      item.source.on_hand_count = item.source.on_hand_count - item.quantity
       unless item.source.save
         errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
       end
@@ -52,6 +53,7 @@ class Order < ApplicationRecord
         errors[:base] << item.source.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
       end
     end
+
     if !payment.nil?
       unless payment.make_voided
         errors[:base] << payments.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
@@ -62,5 +64,5 @@ class Order < ApplicationRecord
       end
     end
     errors.empty?
-  end
+  endssss
 end

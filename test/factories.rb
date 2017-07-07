@@ -59,6 +59,7 @@ FactoryGirl.define do
     state :pending
     amount '111.11'
     association :credit_card, factory: :credit_card
+    association :order, factory: :order
   end
 
   factory :order do

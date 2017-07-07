@@ -36,4 +36,34 @@ class OrderTest < ActiveSupport::TestCase
 
     assert_not order.make_placed
   end
+
+  test 'not enough inventory' do
+    order = create(:order)
+    product = create(:product)
+    cc = create(:credit_card)
+    order.user.credit_card = cc
+    order.save
+
+    order_item = OrderItem.create(order_id: order.id, source_type: Product.name, source_id: product.id, quantity: 15)
+    order.order_items << order_item
+
+    assert_not order.make_placed
+  end
+
+  test 'properly removes inventory' do
+    order = create(:order)
+    product = create(:product)
+    cc = create(:credit_card)
+    order.user.credit_card = cc
+    order.save
+
+    started_with = product.on_hand_count
+    order_item = OrderItem.create(order_id: order.id, source_type: Product.name, source_id: product.id, quantity: 15)
+    order.add_order_item << order_item
+
+    order.make_placed
+
+    product.reload
+    assert_equal(started_with-order_item.quantity, product.on_hand_count, "Properly removed #{order_item.quantity} items from product.")
+  end
 end
