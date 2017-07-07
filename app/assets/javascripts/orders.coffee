@@ -88,22 +88,16 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
     $scope.editingAddress = true;
 
   $scope.addressInit = (address) ->
-    if address.id?
-      $scope.address = new Address(address)
-    else
-      $scope.address = new Address()
+    $scope.address = new Address(address)
+
+  $scope.ccInit = (cc) ->
+    $scope.cc = new CreditCard(cc)
 
   $scope.removeFromCart = (item, index) ->
     $scope.order.order_items.splice(index, 1)
 
     itemToDelete = new OrderItem(item)
     itemToDelete.$delete()
-
-  $scope.ccInit = (cc) ->
-    if cc.id?
-      $scope.cc = new CreditCard(cc)
-    else
-      $scope.cc = new CreditCard()
 
   $scope.updateAddress =  ->
     return if $scope.savingAddress
