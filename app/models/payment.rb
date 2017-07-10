@@ -9,5 +9,4 @@ class Payment < ApplicationRecord
   belongs_to :credit_card
   belongs_to :order,
               inverse_of: :payment
-
 end

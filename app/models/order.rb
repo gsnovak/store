@@ -6,11 +6,14 @@ class Order < ApplicationRecord
   has_one :payment,
           inverse_of: :order
 
+
   self.state_machine({
     cart: [:placed],
     placed: [:canceled],
     canceled: []
    })
+
+  has_many :state_changes, autosave: false, as: :source, inverse_of: :source
 
   def order_total
     order_items.to_a.sum{|oi| oi.source.price}
@@ -54,13 +57,9 @@ class Order < ApplicationRecord
       end
     end
 
-    if !payment.nil?
-      unless payment.make_voided
-        errors[:base] << payments.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
-      end
-
-      unless payment.save
-        errors[:base] << payments.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
+    if not payment.make_voided
+      payment.errors.full_messages.each do |msg|
+        errors[:base] << "Payment Error: #{msg}"
       end
     end
     errors.empty?
