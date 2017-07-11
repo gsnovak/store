@@ -41,7 +41,7 @@ app.factory('Address', ['$resource', ($resource) ->
     }
 ])
 
-app.controller 'ProductsController', ($scope, Product, OrderItem, Order, $window) ->
+app.controller 'ProductsController', ['$scope', 'Product', 'OrderItem', 'Order', '$window', ($scope, Product, OrderItem, Order, $window) ->
   cartPromise = Order.cart().$promise
 
   cartPromise.then (data) ->
@@ -59,13 +59,18 @@ app.controller 'ProductsController', ($scope, Product, OrderItem, Order, $window
 
   $scope.addToCart = (item) ->
     cartPromise.then (data) ->
-      console.log "adding"
       return if _.findWhere($scope.order.order_items, {id: item.id })?
       ItemToSave = new OrderItem(source_id: item.id, quantity: 1000, source_type: "Product")
       ItemToSave.order_id = $scope.order.id
-      ItemToSave.$save()
 
-app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCard, OrderItem) ->
+      ItemToSave.$save()
+      .then ->
+        $scope.saveSuccess = true
+      .catch (result) ->
+        $scope.productErrors = result.errors.product
+]
+
+app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'CreditCard', 'OrderItem', ($scope, Product, Order, Address, CreditCard, OrderItem) ->
 
   Order.cart().$promise.then (data) ->
     if data?
@@ -83,21 +88,17 @@ app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCar
     $scope.editingAddress = true;
 
   $scope.addressInit = (address) ->
-    if address.id?
-      $scope.address = new Address(address)
-    else
-      $scope.address = new Address()
-
-  $scope.removeFromCart = (item) ->
-    itemToDelete = new OrderItem(item)
-    console.log(itemToDelete)
-    itemToDelete.$delete()
+    address.state_id = address.state_id.toString() if address.state_id?
+    $scope.address = new Address(address)
 
   $scope.ccInit = (cc) ->
-    if cc.id?
-      $scope.cc = new CreditCard(cc)
-    else
-      $scope.cc = new CreditCard()
+    $scope.cc = new CreditCard(cc)
+
+  $scope.removeFromCart = (item, index) ->
+    $scope.order.order_items.splice(index, 1)
+
+    itemToDelete = new OrderItem(item)
+    itemToDelete.$delete()
 
   $scope.updateAddress =  ->
     return if $scope.savingAddress
@@ -110,9 +111,9 @@ app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCar
 
     promise
       .then ->
-        console.log "success"
-      .catch ->
-        console.log "error"
+        delete $scope.addressErrors
+      .catch (result) ->
+        $scope.addressErrors = result.data.address
       .finally ->
         $scope.savingAddress = false
         $scope.editingAddress = false
@@ -128,9 +129,9 @@ app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCar
 
     promise
       .then ->
-        console.log "success"
+        delete $scope.ccErrors
       .catch (result) ->
-        console.log "error"
+        $scope.ccErrors = result.data.credit_cards
       .finally ->
         $scope.savingCC = false
         $scope.editingCC = false
@@ -144,14 +145,13 @@ app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCar
     $scope.order.state = 'placed'
     $scope.order.$save()
     .then ->
-      console.log "success"
+      delete $scope.orderErrors
     .catch (result) ->
-      console.log "error"
+      $scope.orderErrors = result.data.orders
     .finally ->
       $scope.savingOrder = false
       $scope.editingOrder = false
       $scope.orderCompleted = true
-
-
+]
 
 
