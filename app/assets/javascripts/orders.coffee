@@ -1,7 +1,7 @@
 app = angular.module('customerApp')
 
 app.factory('Product', ['$resource', ($resource) ->
-  $resource '/api/v1/products/:id', { id: "@id" },
+  $resource '/api/v1/product/:id', { id: "@id" },
   'update': {
     method: 'PUT',
     is_array: true
@@ -9,26 +9,26 @@ app.factory('Product', ['$resource', ($resource) ->
 ])
 
 app.factory('Order', ['$resource', ($resource) ->
-  $resource '/api/v1/orders/:id', { id: "@id" },
+  $resource '/api/v1/order/:id', { id: "@id" },
     'update': {
       method: 'PUT'
     }
     'cart': {
       method: 'GET',
       is_array: false,
-      url: '/api/v1/orders/cart'
+      url: '/api/v1/order/cart'
     }
 ])
 
 app.factory('OrderItem', ['$resource', ($resource) ->
-  $resource '/api/v1/order_items/:id', { id: "@id" },
+  $resource '/api/v1/order_item/:id', { id: "@id" },
     'update': {
       method: 'PUT'
     }
 ])
 
 app.factory('CreditCard', ['$resource', ($resource) ->
-  $resource '/api/v1/credit_cards/:id', { id: "@id" },
+  $resource '/api/v1/credit_card/:id', { id: "@id" },
     'update': {
       method: 'PUT'
     }
@@ -142,7 +142,7 @@ app.controller 'CheckoutController', ($scope, Product, Order, Address, CreditCar
     return if $scope.savingOrder
     $scope.savingOrder = true
     $scope.order.state = 'placed'
-    $scope.order.$save()
+    $scope.order.$update()
     .then ->
       console.log "success"
     .catch (result) ->

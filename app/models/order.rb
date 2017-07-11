@@ -45,6 +45,10 @@ class Order < ApplicationRecord
     errors.empty?
   end
 
+  after_transition_to :placed do
+    OrderMailer.send_placement_email(self).deliver
+  end
+
   before_transition_to :canceled do
     order_items.each do |item|
       item.source.on_hand_count += item.quantity
@@ -62,5 +66,9 @@ class Order < ApplicationRecord
       end
     end
     errors.empty?
+  end
+
+  after_transition_to :placed do
+    OrderMailer.send_cancellation_email(self).deliver
   end
 end
