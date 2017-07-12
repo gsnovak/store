@@ -102,9 +102,9 @@
               %td
                 {{ item.quantity }}
               %td
-                %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { click: "removeFromCart(item, $index)", hide: "orderCompleted()" }}
+                %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { click: "removeFromCart(item, $index)", hide: "orderCompleted" }}
       .panel-footer
-        %button.btn.btn-primary.pull-right{ ng: { click: "CompleteOrder(Order)" }}
+        %button.btn.btn-primary.pull-right{ ng: { click: "completeOrder()" }}
           Complete
         .clearfix
 

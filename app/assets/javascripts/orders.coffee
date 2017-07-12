@@ -143,7 +143,7 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
     return if $scope.savingOrder
     $scope.savingOrder = true
     $scope.order.state = 'placed'
-    $scope.order.$save()
+    $scope.order.$update()
     .then ->
       delete $scope.orderErrors
     .catch (result) ->

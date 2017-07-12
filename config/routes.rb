@@ -4,12 +4,13 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :orders do
          get 'cart', on: :collection, to: 'orders#cart'
+         put :update
       end
       resources :products
       resources :order_items do
         put :update
       end
-      resources :address do
+      resources :addresses do
         put :update
       end
       resources :credit_cards do
@@ -27,6 +28,4 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, controllers: { registrations: 'registrations' }
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
-

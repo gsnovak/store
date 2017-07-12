@@ -118,6 +118,10 @@ GEM
     devise-bootstrap-views (0.0.11)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.2.1)
+    dotenv-rails (2.2.1)
+      dotenv (= 2.2.1)
+      railties (>= 3.2, < 5.2)
     erubi (1.6.1)
     execjs (2.7.0)
     factory_girl (4.8.0)
@@ -275,6 +279,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   devise-bootstrap-views
+  dotenv-rails
   factory_girl_rails (~> 4.0)
   haml
   jbuilder (~> 2.5)
