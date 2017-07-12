@@ -36,7 +36,7 @@
                   .col-sm-3
                     = wrapped_angular_select_year('cc.year', "ng-disabled" => "!editingCC || orderCompleted()")
       .panel-footer
-        %button.btn.btn-success.pull-right{ ng: { click: "updateCC(cc)", hide: "!editingCC" }}
+        %button.btn.btn-success.pull-right{ ng: { click: "updateCC()", hide: "!editingCC" }}
           %span{class: 'icon', ng: { if: "savingAddress" }}
           Update
         %button.btn.btn-success.pull-right{ ng: { click: "editCC()", hide: "editingCC" }}
@@ -72,7 +72,7 @@
           .form-group
             .col-sm-offset-3.col-sm-12
       .panel-footer
-        %button.btn.btn-success.pull-right{ ng: { click: "updateAddress(address)", hide: "!editingAddress" }}
+        %button.btn.btn-success.pull-right{ ng: { click: "updateAddress()", hide: "!editingAddress" }}
           Update
         %button.btn.btn-success.pull-right{ ng: { click: "editAddress()", hide: "editingAddress" }}
           Edit
@@ -102,7 +102,7 @@
               %td
                 {{ item.quantity }}
               %td
-                %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { click: "removeFromCart(item, $index)", hide: "orderCompleted()" }}
+                %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { click: "removeFromCart(item, $index)", hide: "orderCompleted" }}
       .panel-footer
         %button.btn.btn-primary.pull-right{ ng: { click: "CompleteOrder(Order)" }}
           Complete

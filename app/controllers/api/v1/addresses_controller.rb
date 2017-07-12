@@ -1,4 +1,4 @@
-class Api::V1::AddressController < Api::V1::BaseController
+class Api::V1::AddressesController < Api::V1::BaseController
 
   private
 
