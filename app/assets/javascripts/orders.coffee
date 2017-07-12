@@ -1,7 +1,7 @@
 app = angular.module('customerApp')
 
 app.factory('Product', ['$resource', ($resource) ->
-  $resource '/api/v1/product/:id', { id: "@id" },
+  $resource '/api/v1/products/:id', { id: "@id" },
   'update': {
     method: 'PUT',
     is_array: true
@@ -9,33 +9,33 @@ app.factory('Product', ['$resource', ($resource) ->
 ])
 
 app.factory('Order', ['$resource', ($resource) ->
-  $resource '/api/v1/order/:id', { id: "@id" },
+  $resource '/api/v1/orders/:id', { id: "@id" },
     'update': {
       method: 'PUT'
     }
     'cart': {
       method: 'GET',
       is_array: false,
-      url: '/api/v1/order/cart'
+      url: '/api/v1/orders/cart'
     }
 ])
 
 app.factory('OrderItem', ['$resource', ($resource) ->
-  $resource '/api/v1/order_item/:id', { id: "@id" },
+  $resource '/api/v1/order_items/:id', { id: "@id" },
     'update': {
       method: 'PUT'
     }
 ])
 
 app.factory('CreditCard', ['$resource', ($resource) ->
-  $resource '/api/v1/credit_card/:id', { id: "@id" },
+  $resource '/api/v1/credit_cards/:id', { id: "@id" },
     'update': {
       method: 'PUT'
     }
 ])
 
 app.factory('Address', ['$resource', ($resource) ->
-  $resource '/api/v1/address/:id', { id: "@id" },
+  $resource '/api/v1/addresses/:id', { id: "@id" },
     'update': {
       method: 'PUT'
     }

@@ -3,11 +3,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :orders do
-         get 'cart', on: :collection, to: 'order#cart'
+         get 'cart', on: :collection, to: 'orders#cart'
          put :update
       end
       resources :products
-      resources :order_item do
+      resources :order_items do
         put :update
       end
       resources :addresses do
