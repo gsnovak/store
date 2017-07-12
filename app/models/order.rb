@@ -3,13 +3,17 @@ class Order < ApplicationRecord
 
   belongs_to :user
   has_many :order_items
-  has_one :payment
+  has_one :payment,
+          inverse_of: :order
+
 
   self.state_machine({
     cart: [:placed],
     placed: [:canceled],
     canceled: []
    })
+
+  has_many :state_changes, autosave: false, as: :source, inverse_of: :source
 
   def order_total
     order_items.to_a.sum{|oi| oi.source.price}
@@ -22,7 +26,7 @@ class Order < ApplicationRecord
 
     order_items.each do |item|
       if item.source.on_hand_count < item.quantity
-        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
+        errors[:base] << "There's not enough inventory to fulfill order!"
       end
     end
 
@@ -56,13 +60,10 @@ class Order < ApplicationRecord
         errors[:base] << item.source.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
       end
     end
-    if !payment.nil?
-      unless payment.make_voided
-        errors[:base] << payments.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
-      end
 
-      unless payment.save
-        errors[:base] << payments.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
+    if not payment.make_voided
+      payment.errors.full_messages.each do |msg|
+        errors[:base] << "Payment Error: #{msg}"
       end
     end
     errors.empty?

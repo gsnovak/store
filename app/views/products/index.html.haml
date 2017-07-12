@@ -1,20 +1,25 @@
 %div{ ng: { controller: "ProductsController" }}
+  .container
+    .alert.alert-success{ ng: { if: "saveSuccess" }}
+      %p
+        Added to cart.
   %div{ ng: { repeat: "product in products" }}
     .container
       .panel
         .panel-body
-          .row
-            .col-sm-4
+          .alert.alert-danger{ ng: { if: "productErrors" }}
+            %ul{ ng: { repeat: "val in productErrors" }}
+              %li
+                {{ val }}
+          %form
+            .form-group
               %h6
                 {{ product.name }}
-            .col-sm-4
               %h6
-                {{ product.price | currency : symbol : fractionSize }}
-          .row
-            .col-sm-4
+                {{ product.price | currency :symbol : factionSize }}
+            .form-group
               %image.image{ ng: { src: "{{ product.picture_url }}" }}
-          .row
-            .col-sm-4
+            .form-group
               %button.btn.btn-success{ ng: { click:"addToCart(product)" }}
                 Add To Cart
               %input.input-sm{ type: "number", ng: { model: "product.quantity" }}
