@@ -20,6 +20,7 @@ gem 'devise'
 gem 'bootstrap_form'
 gem 'active-list'
 gem 'material_design_lite-rails'
+gem 'dotenv-rails', groups: [:development, :test]
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
