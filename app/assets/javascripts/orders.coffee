@@ -35,7 +35,7 @@ app.factory('CreditCard', ['$resource', ($resource) ->
 ])
 
 app.factory('Address', ['$resource', ($resource) ->
-  $resource '/api/v1/address/:id', { id: "@id" },
+  $resource '/api/v1/addresses/:id', { id: "@id" },
     'update': {
       method: 'PUT'
     }
