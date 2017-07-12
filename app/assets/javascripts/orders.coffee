@@ -60,7 +60,7 @@ app.controller 'ProductsController', ['$scope', 'Product', 'OrderItem', 'Order',
   $scope.addToCart = (item) ->
     cartPromise.then (data) ->
       return if _.findWhere($scope.order.order_items, {id: item.id })?
-      ItemToSave = new OrderItem(source_id: item.id, quantity: 1000, source_type: "Product")
+      ItemToSave = new OrderItem(source_id: item.id, quantity: item.quantity, source_type: "Product")
       ItemToSave.order_id = $scope.order.id
 
       ItemToSave.$save()
@@ -113,7 +113,7 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
       .then ->
         delete $scope.addressErrors
       .catch (result) ->
-        $scope.addressErrors = result.data.address
+        $scope.addressErrors = result.data.addresses
       .finally ->
         $scope.savingAddress = false
         $scope.editingAddress = false

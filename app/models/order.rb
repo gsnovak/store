@@ -30,13 +30,6 @@ class Order < ApplicationRecord
       end
     end
 
-    order_items.each do |item|
-      item.source.on_hand_count -= item.quantity
-      unless item.source.save
-        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
-      end
-    end
-
     payment = Payment.find_or_initialize_by(credit_card_id: user.credit_card.id, order_id: self.id)
     payment.amount = order_total
     payment.save
@@ -54,13 +47,6 @@ class Order < ApplicationRecord
   end
 
   before_transition_to :canceled do
-    order_items.each do |item|
-      item.source.on_hand_count += item.quantity
-      unless item.source.save
-        errors[:base] << item.source.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
-      end
-    end
-
     if not payment.make_voided
       payment.errors.full_messages.each do |msg|
         errors[:base] << "Payment Error: #{msg}"
@@ -69,7 +55,23 @@ class Order < ApplicationRecord
     errors.empty?
   end
 
+  after_transition_to :canceled do
+    order_items.each do |item|
+      item.source.on_hand_count += item.quantity
+      unless item.source.save
+        errors[:base] << item.source.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
+      end
+    end
+  end
+
   after_transition_to :placed do
     OrderMailer.send_cancellation_email(self).deliver
+
+    order_items.each do |item|
+      item.source.on_hand_count -= item.quantity
+      unless item.source.save
+        errors[:base] << item.errors.map{|field, field_errors| "#{field}: #{field_errors}"}
+      end
+    end
   end
 end
