@@ -1,4 +1,5 @@
-class  Api::V1::ProductController < ApplicationController
+class  Api::V1::Products
+  Controller < ApplicationController
   def index
     @products = Product.all
 

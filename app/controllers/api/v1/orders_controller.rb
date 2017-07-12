@@ -1,4 +1,4 @@
-class Api::V1::OrderController < Api::V1::BaseController
+class Api::V1::OrdersController < Api::V1::BaseController
   include CartHelper
   def index
     @order = Order.find_or_initialize_by(user_id: current_user.id)

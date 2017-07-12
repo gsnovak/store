@@ -2,18 +2,18 @@ Rails.application.routes.draw do
   root "products#index"
   namespace :api do
     namespace :v1 do
-      resources :order do
+      resources :orders do
          get 'cart', on: :collection, to: 'order#cart'
          put :update
       end
-      resources :product
+      resources :products
       resources :order_item do
         put :update
       end
-      resources :address do
+      resources :addresses do
         put :update
       end
-      resources :credit_card do
+      resources :credit_cards do
         put :update
       end
     end
@@ -29,4 +29,3 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'registrations' }
 end
-

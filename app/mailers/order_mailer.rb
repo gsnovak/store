@@ -3,13 +3,11 @@ class OrderMailer < ActionMailer::Base
 
   def send_placement_email(order)
     @order = order
-    mail( :to => order.user.email,
-    :subject => 'Your order has been placed.' )
+    mail( to: order.user.email, subject: 'Your order has been placed.' )
   end
 
   def send_cancellation_email(order)
     @order = order
-    mail( to: order.user.email,
-    subject: 'Your order has been canceled' )
+    mail( to: order.user.email, subject: 'Your order has been canceled' )
   end
 end

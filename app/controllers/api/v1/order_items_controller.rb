@@ -1,4 +1,4 @@
-class Api::V1::OrderItemController < Api::V1::BaseController
+class Api::V1::OrderItemsController < Api::V1::BaseController
 
   private
 

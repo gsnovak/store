@@ -1,4 +1,4 @@
-class Api::V1::CreditCardController < Api::V1::BaseController
+class Api::V1::CreditCardsController < Api::V1::BaseController
 
   private
 
