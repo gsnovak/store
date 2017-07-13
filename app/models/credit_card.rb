@@ -1,5 +1,5 @@
 class CreditCard < ApplicationRecord
-  # before_save :set_last_four
+  #this needs to be fixed before_save :set_last_four
 
   attr_accessor :number
 
