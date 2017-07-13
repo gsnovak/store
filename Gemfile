@@ -21,6 +21,7 @@ gem 'bootstrap_form'
 gem 'active-list'
 gem 'material_design_lite-rails'
 gem 'dotenv-rails', groups: [:development, :test]
+gem 'sidekiq'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -28,6 +29,7 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'coffee-rails', '~> 4.2'
 gem 'cloudinary'
 gem 'carrierwave', '~> 1.0'
+gem 'redis-rails'
 gem 'simple_form'
 gem "jquery-rails"
 gem 'angularjs-rails'
