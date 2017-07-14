@@ -112,8 +112,9 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
       promise = $scope.address.$save()
 
     promise
-      .then ->
+      .then (data) ->
         delete $scope.addressErrors
+        $scope.addressInit(data)
       .catch (result) ->
         $scope.addressErrors = result.data.addresses
       .finally ->
