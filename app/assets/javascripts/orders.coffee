@@ -93,6 +93,9 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
 
   $scope.ccInit = (cc) ->
     $scope.cc = new CreditCard(cc)
+    if $scope.cc?
+      $scope.ccDisplay = "XXXX-XXXX-XXXX-" + $scope.cc.last_four
+
 
   $scope.removeFromCart = (item, index) ->
     $scope.order.order_items.splice(index, 1)

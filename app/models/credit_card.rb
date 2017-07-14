@@ -1,5 +1,5 @@
 class CreditCard < ApplicationRecord
-  #this needs to be fixed before_save :set_last_four
+  before_save :set_last_four
 
   attr_accessor :number
 
@@ -9,6 +9,6 @@ class CreditCard < ApplicationRecord
   private
 
   def set_last_four
-    self.last_four = number[-4..-1]
+    self.last_four = number[-4..-1] if not number.nil?
   end
 end

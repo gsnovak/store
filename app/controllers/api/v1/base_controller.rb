@@ -31,14 +31,6 @@ class Api::V1::BaseController < ApplicationController
 
   private
 
-  def source_path
-    send("api_v1#{controller_name.singularize}_path")
-  end
-
-  def sources_path
-    send("api_v1_#{controller_name}_path")
-  end
-
   def source_klass
     controller_name.singularize.classify.constantize
   end
