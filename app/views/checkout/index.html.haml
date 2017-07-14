@@ -21,7 +21,7 @@
           .form-group
             %label.col-sm-3.control-label{ for: "cc" } Card #
             .col-lg-8
-              %input#cc{ ng: { model: "cc.number", disabled: "!editingCC || orderCompleted()" }, class: "form-control", placeholder: "Credit Card Number" }
+              %input#cc{ ng: { model: "cc.number", value: "ccDisplay", disabled: "!editingCC || orderCompleted()" }, class: "form-control", placeholder: "Credit Card Number" }
           .form-group
             %label.col-sm-3.control-label{for: "cc",} Card CVV
             .col-lg-8
@@ -60,7 +60,7 @@
           .form-group
             %label.col-sm-3.control-label{ for: "state"} State
             .col-lg-8
-              = select_tag('address.state_id', options_for_select(@states.collect{ |u| [u.abbreviation, u.id.to_s]  }), { 'ng-model' => "address.state_id", class: "form-control", "ng-disabled" => "!editingAddress || orderCompleted()"  })
+              = select_tag('address.state_id', options_for_select(@states.collect{ |u| [u.abbreviation, u.id.to_s]  }, selected = ""), { 'ng-model' => "address.state_id", 'ng-init' => '', class: "form-control", "ng-disabled" => "!editingAddress || orderCompleted()"  })
           .form-group
             %label.col-sm-3.control-label{ for: "city",} City
             .col-lg-8

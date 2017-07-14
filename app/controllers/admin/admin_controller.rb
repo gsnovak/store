@@ -1,6 +1,11 @@
 module Admin
   class AdminController < ApplicationController
-    before_action :authorized?
+    load_and_authorize_resource
+
+    rescue_from CanCan::AccessDenied do |exception|
+      redirect_to products_path
+    end
+
     before_action :retrieve_source_model_by_id, only: [:edit, :update, :destroy, :show]
     layout 'admin/application'
 
@@ -21,12 +26,6 @@ module Admin
       end
     end
 
-    def show
-    end
-
-    def edit
-    end
-
     def update
       if @source_model.update(send("#{controller_name.singularize}_params"))
         redirect_to sources_path
@@ -41,13 +40,6 @@ module Admin
     end
 
     private
-
-    def authorized?
-      if current_user.nil? or !current_user.admin?
-        flash[:error] = "You are not authorized to view that page."
-        redirect_to '/'
-      end
-    end
 
     def source_path
       send("admin_#{controller_name.singularize}_path")

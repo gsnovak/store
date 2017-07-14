@@ -9,6 +9,6 @@ class CreditCard < ApplicationRecord
   private
 
   def set_last_four
-    self.last_four = number[-4..-1]
+    self.last_four = number[-4..-1] unless number.nil?
   end
 end
