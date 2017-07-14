@@ -56,10 +56,9 @@ app.controller 'ProductsController', ['$scope', 'Product', 'OrderItem', 'Order',
   Product.get().$promise.then (data) ->
       $scope.products = data.products
 
-
   $scope.addToCart = (item) ->
     cartPromise.then (data) ->
-      return if _.findWhere($scope.order.order_items, {id: item.id })?
+      return if _.findWhere($scope.order.order_items, { source_id: item.id })
       ItemToSave = new OrderItem(source_id: item.id, quantity: item.quantity, source_type: "Product")
       ItemToSave.order_id = $scope.order.id
 
