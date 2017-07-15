@@ -103,6 +103,11 @@
                 {{ item.quantity }}
               %td
                 %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { click: "removeFromCart(item, $index)"}}
+            %tr
+              %td
+                %strong
+                  Total:
+                {{ order_total() | currency }}
       .panel-footer
         %button.btn.btn-primary.pull-right{ ng: { click: "completeOrder()", hide: "orderCompleted" }}
           Complete
