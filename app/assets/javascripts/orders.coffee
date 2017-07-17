@@ -80,6 +80,12 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
     $scope.order.order_items.map (item) ->
       new OrderItem(item)
 
+    $scope.total = ->
+      total = 0
+      angular.forEach($scope.order.order_items, (item) ->
+        total += (item.source.price * item.quantity))
+      total
+
   $scope.editCC = ->
     $scope.editingCC = true;
 
@@ -103,12 +109,6 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
 
     itemToDelete = new OrderItem(item)
     itemToDelete.$delete()
-
-  $scope.total = ->
-    total = 0
-    angular.forEach($scope.order.order_items, (item) ->
-      total += (item.source.price * item.quantity))
-    total
 
   $scope.updateAddress =  ->
     return if $scope.savingAddress
