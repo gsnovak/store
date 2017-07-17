@@ -92,8 +92,10 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
 
   $scope.ccInit = (cc) ->
     $scope.cc = new CreditCard(cc)
-    if $scope.cc?
+    if $scope.cc? && scope.last_four?
       $scope.ccDisplay = "XXXX-XXXX-XXXX-" + $scope.cc.last_four
+    else
+      $scope.ccDisplay = "XXXX-XXXX-XXXX-XXXX"
 
 
   $scope.removeFromCart = (item, index) ->
