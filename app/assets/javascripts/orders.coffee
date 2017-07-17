@@ -137,7 +137,7 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
         $scope.editingCC = false
 
   $scope.orderPlaced = ->
-    $scope.order.state is "placed"
+    $scope.order.state is 'placed'
 
   $scope.completeOrder = ->
     return if $scope.savingOrder
