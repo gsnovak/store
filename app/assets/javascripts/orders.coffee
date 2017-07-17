@@ -56,10 +56,9 @@ app.controller 'ProductsController', ['$scope', 'Product', 'OrderItem', 'Order',
   Product.get().$promise.then (data) ->
       $scope.products = data.products
 
-
   $scope.addToCart = (item) ->
     cartPromise.then (data) ->
-      return if _.findWhere($scope.order.order_items, {id: item.id })?
+      return if _.findWhere($scope.order.order_items, { source_id: item.id })
       ItemToSave = new OrderItem(source_id: item.id, quantity: item.quantity, source_type: "Product")
       ItemToSave.order_id = $scope.order.id
 
@@ -93,6 +92,9 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
 
   $scope.ccInit = (cc) ->
     $scope.cc = new CreditCard(cc)
+    if $scope.cc?
+      $scope.ccDisplay = "XXXX-XXXX-XXXX-" + $scope.cc.last_four
+
 
   $scope.removeFromCart = (item, index) ->
     $scope.order.order_items.splice(index, 1)
@@ -110,8 +112,9 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
       promise = $scope.address.$save()
 
     promise
-      .then ->
+      .then (data) ->
         delete $scope.addressErrors
+        $scope.addressInit(data)
       .catch (result) ->
         $scope.addressErrors = result.data.addresses
       .finally ->
