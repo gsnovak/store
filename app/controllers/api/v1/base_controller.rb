@@ -14,7 +14,7 @@ class Api::V1::BaseController < ApplicationController
   end
 
   def update
-    if @source_model.update(send("#{controller_name.singularize}_params"))
+    if @source_model.update(send("#{controller_name.singularize}_params")) && @source_model.errors.empty?
       render status: 200, json: @source_model
     else
       render status: 400, json: @source_model.errors.full_messages
