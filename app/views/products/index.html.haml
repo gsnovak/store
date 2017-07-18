@@ -22,4 +22,4 @@
             .form-group
               %button.btn.btn-success{ ng: { click:"addToCart(product)" }}
                 Add To Cart
-              %input.input-sm{ type: "number", ng: { model: "product.quantity" }}
+              = select_tag('', options_for_select((1..10)), {'ng-model' => "product.quantity", 'ng-init' => '' })

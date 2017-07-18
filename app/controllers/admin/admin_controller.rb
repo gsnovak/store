@@ -36,6 +36,7 @@ module Admin
 
     def destroy
       @source_model.destroy
+      puts "herererererer\n\n\n\n\n#{sources_path}"
       redirect_to sources_path
     end
 

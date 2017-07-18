@@ -42,31 +42,9 @@ app.factory('Address', ['$resource', ($resource) ->
 ])
 
 app.controller 'ProductsController', ['$scope', 'Product', 'OrderItem', 'Order', '$window', ($scope, Product, OrderItem, Order, $window) ->
-  cartPromise = Order.cart().$promise
-
-  cartPromise.then (data) ->
-    if data?
-      $scope.order = new Order(data.order)
-    else
-      $scope.order = new Order()
-
-    $scope.order.order_items.map (item) ->
-      new OrderItem(item)
 
   Product.get().$promise.then (data) ->
       $scope.products = data.products
-
-  $scope.addToCart = (item) ->
-    cartPromise.then (data) ->
-      return if _.findWhere($scope.order.order_items, { source_id: item.id })
-      ItemToSave = new OrderItem(source_id: item.id, quantity: item.quantity, source_type: "Product")
-      ItemToSave.order_id = $scope.order.id
-
-      ItemToSave.$save()
-      .then ->
-        $scope.saveSuccess = true
-      .catch (result) ->
-        $scope.productErrors = result.errors.product
 ]
 
 app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'CreditCard', 'OrderItem', ($scope, Product, Order, Address, CreditCard, OrderItem) ->
@@ -78,6 +56,7 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
       $scope.order = new Order()
 
     $scope.order.order_items.map (item) ->
+      item.quantity.toString() if item.quantity?
       new OrderItem(item)
 
     $scope.total = ->
@@ -85,6 +64,24 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
       angular.forEach($scope.order.order_items, (item) ->
         total += (item.source.price * item.quantity))
       total
+
+    $scope.addToCart = (item) ->
+      existingItem = _.findWhere($scope.order.order_items, { source_id: item.id })
+      if existingItem?
+        existingItem.quantity = item.quantity
+        itemToSave = new OrderItem(existingItem)
+        promise = itemToSave.$update()
+      else
+        itemToSave = new OrderItem(source_id: item.id, quantity: item.quantity, source_type: "Product")
+        itemToSave.order_id = $scope.order.id
+        promise = itemToSave.$save()
+        $scope.order.order_items.push(itemToSave)
+
+      promise
+        .then ->
+          $scope.saveSuccess = true
+        .catch (result) ->
+          $scope.productErrors = result.errors.product
 
   $scope.editCC = ->
     $scope.editingCC = true;
@@ -102,7 +99,6 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
       $scope.ccDisplay = "XXXX-XXXX-XXXX-" + $scope.cc.last_four
     else
       $scope.ccDisplay = "XXXX-XXXX-XXXX-XXXX"
-
 
   $scope.removeFromCart = (item, index) ->
     $scope.order.order_items.splice(index, 1)

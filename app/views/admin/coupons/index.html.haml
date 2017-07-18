@@ -15,4 +15,4 @@
           %td= coupon.amount
           %td.mdl-data-table__cell--non-numeric= coupon.code
           %td.mdl-data-table__cell--non-numeric= link_to 'Edit',edit_admin_coupon_path(coupon)
-          %td.mdl-data-table__cell--non-numeric-= link_to "Delete", admin_coupon_path(coupon), method: :delete, remote: true, data: { confirm: 'Are you certain you want to delete this?' }
+          %td.mdl-data-table__cell--non-numeric-= link_to "Delete", admin_coupon_path(coupon), data: { confirm: 'Are you certain you want to delete this?' }, method: :delete

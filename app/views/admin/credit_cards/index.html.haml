@@ -17,4 +17,4 @@
           %td= credit_card.month
           %td= credit_card.year
           %td.mdl-data-table__cell--non-numeric= link_to 'Edit', edit_admin_credit_card_registration_path(credit_card)
-          %td.mdl-data-table__cell--non-numeric-= link_to "Delete", credit_card_admin_path(credit_card), method: :delete, remote: true, data: { confirm: 'Are you certain you want to delete this?' }
+          %td.mdl-data-table__cell--non-numeric-= link_to "Delete", credit_card_admin_path(credit_card), data: { confirm: 'Are you certain you want to delete this?' }, method: :delete
