@@ -87,7 +87,6 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
       $scope.order = new Order()
 
     $scope.order.order_items.map (item) ->
-      item.quantity.toString() if item.quantity?
       new OrderItem(item)
 
     $scope.total = ->
