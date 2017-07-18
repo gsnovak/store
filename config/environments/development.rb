@@ -27,7 +27,7 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.active_job.queue_adapter = :sidekiq
 
   config.action_mailer.perform_caching = false
 
@@ -37,8 +37,13 @@ Rails.application.configure do
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.delivery_method = :smtp
+
   # Debug mode disables concatenation and preprocessing of assets.
-  # This option may cause significant delays in view rendering with a large
+  # This option may cause significant delays in view rendering with a large`
   # number of complex assets.
   config.assets.debug = true
 

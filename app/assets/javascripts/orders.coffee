@@ -80,11 +80,11 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
     $scope.order.order_items.map (item) ->
       new OrderItem(item)
 
-  $scope.order_total = ->
-    total = 0
-    angular.forEach($scope.order.order_items, (item) ->
-      total += ( item.source.price * item.quantity))
-    total
+    $scope.total = ->
+      total = 0
+      angular.forEach($scope.order.order_items, (item) ->
+        total += (item.source.price * item.quantity))
+      total
 
   $scope.editCC = ->
     $scope.editingCC = true;
@@ -98,8 +98,10 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
 
   $scope.ccInit = (cc) ->
     $scope.cc = new CreditCard(cc)
-    if $scope.cc?
+    if $scope.cc? && $scope.cc.last_four?
       $scope.ccDisplay = "XXXX-XXXX-XXXX-" + $scope.cc.last_four
+    else
+      $scope.ccDisplay = "XXXX-XXXX-XXXX-XXXX"
 
 
   $scope.removeFromCart = (item, index) ->
@@ -146,7 +148,7 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
         $scope.editingCC = false
 
   $scope.orderPlaced = ->
-    $scope.order.state is "placed"
+    $scope.order.state is 'placed'
 
   $scope.completeOrder = ->
     return if $scope.savingOrder

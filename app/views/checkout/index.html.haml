@@ -106,8 +106,7 @@
             %tr
               %td
                 %strong
-                  Total:
-                {{ order_total() | currency }}
+                  Total: {{ total() | currency }}
       .panel-footer
         %button.btn.btn-primary.pull-right{ ng: { click: "completeOrder()", hide: "orderCompleted" }}
           Complete
