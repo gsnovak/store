@@ -41,6 +41,37 @@ app.factory('Address', ['$resource', ($resource) ->
     }
 ])
 
+app.controller 'BaseController', ['$scope', 'Order', 'OrderItem', '$window', ($scope, Order, OrderItem, $window) ->
+  Order.cart().$promise.then (data) ->
+      if data?
+        $scope.order = new Order(data.order)
+      else
+        $scope.order = new Order()
+
+  $scope.addToCart = (item) ->
+      return if $scope.addingToCart
+      $scope.addingToCart = true
+
+      existingItem = _.findWhere($scope.order.order_items, { source_id: item.id })
+      if existingItem?
+        existingItem.quantity = item.quantity
+        itemToSave = new OrderItem(existingItem)
+        promise = itemToSave.$update()
+      else
+        itemToSave = new OrderItem(source_id: item.id, quantity: item.quantity, source_type: "Product")
+        itemToSave.order_id = $scope.order.id
+        promise = itemToSave.$save()
+        $scope.order.order_items.push(itemToSave)
+
+      promise
+        .then ->
+          $scope.saveSuccess = true
+        .catch (result) ->
+          $scope.productErrors = result.errors.product
+        .finally ->
+          $scope.addingToCart = false
+]
+
 app.controller 'ProductsController', ['$scope', 'Product', 'OrderItem', 'Order', '$window', ($scope, Product, OrderItem, Order, $window) ->
 
   Product.get().$promise.then (data) ->
@@ -65,29 +96,11 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
         total += (item.source.price * item.quantity))
       total
 
-    $scope.addToCart = (item) ->
-      existingItem = _.findWhere($scope.order.order_items, { source_id: item.id })
-      if existingItem?
-        existingItem.quantity = item.quantity
-        itemToSave = new OrderItem(existingItem)
-        promise = itemToSave.$update()
-      else
-        itemToSave = new OrderItem(source_id: item.id, quantity: item.quantity, source_type: "Product")
-        itemToSave.order_id = $scope.order.id
-        promise = itemToSave.$save()
-        $scope.order.order_items.push(itemToSave)
-
-      promise
-        .then ->
-          $scope.saveSuccess = true
-        .catch (result) ->
-          $scope.productErrors = result.errors.product
-
   $scope.editCC = ->
-    $scope.editingCC = true;
+    $scope.editingCC = true
 
   $scope.editAddress = ->
-    $scope.editingAddress = true;
+    $scope.editingAddress = true
 
   $scope.addressInit = (address) ->
     address.state_id = address.state_id.toString() if address.state_id?
