@@ -88,16 +88,16 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
 
   Order.cart().$promise.then (data) ->
     if data?
-      $scope.order = new Order(data.order)
+      $scope.ord = new Order(data.order)
     else
-      $scope.order = new Order()
+      $scope.ord = new Order()
 
-    $scope.order.order_items.map (item) ->
+    $scope.ord.order_items.map (item) ->
       new OrderItem(item)
 
     $scope.total = ->
       total = 0
-      angular.forEach($scope.order.order_items, (item) ->
+      angular.forEach($scope.ord.order_items, (item) ->
         total += (item.source.price * item.quantity))
       total
 
@@ -161,8 +161,8 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
   $scope.completeOrder = ->
     return if $scope.savingOrder
     $scope.savingOrder = true
-    $scope.order.state = 'placed'
-    $scope.order.$update()
+    $scope.ord.state = 'placed'
+    $scope.ord.$update()
     .then ->
       delete $scope.orderErrors
     .catch (result) ->
