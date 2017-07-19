@@ -151,22 +151,27 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
         $scope.savingCC = false
         $scope.editingCC = false
 
-  $scope.orderPlaced = ->
-    $scope.order.state is 'placed'
-
   $scope.completeOrder = ->
     return if $scope.savingOrder
     $scope.savingOrder = true
-    $scope.ord.state = 'placed'
-    $scope.ord.$update()
-    .then ->
-      delete $scope.orderErrors
-    .catch (result) ->
-      $scope.orderErrors = result.data.orders
-    .finally ->
-      $scope.savingOrder = false
-      $scope.editingOrder = false
-      $scope.orderCompleted = true
+
+    promises = []
+    if !$scope.cc.id?
+      promises.push $scope.updateCC()
+    if !$scope.address.id?
+      promises.push $scope.updateAddress()
+
+    $q.all(promises)
+      .then ->
+        $scope.ord.state = 'placed'
+        $scope.ord.$update()
+        .then ->
+          delete $scope.orderErrors
+          $scope.orderCompleted = true
+        .catch (result) ->
+          $scope.orderErrors = result.data.orders
+        .finally ->
+          $scope.savingOrder = false
 ]
 
 
