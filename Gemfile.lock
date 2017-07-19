@@ -111,6 +111,9 @@ GEM
       sprockets (< 4.0)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
+    credit_card_validations (3.4.0)
+      activemodel (>= 3, <= 6)
+      activesupport (>= 3, <= 6)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -304,6 +307,7 @@ DEPENDENCIES
   carrierwave (~> 1.0)
   cloudinary
   coffee-rails (~> 4.2)
+  credit_card_validations
   devise
   devise-bootstrap-views
   dotenv-rails

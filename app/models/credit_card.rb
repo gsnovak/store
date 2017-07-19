@@ -1,9 +1,12 @@
 class CreditCard < ApplicationRecord
+  attr_accessor :number
+  include ActiveModel::Validations
+  validates :number, presence: true, credit_card_number: true
+
   before_save :set_last_four
 
-  attr_accessor :number
-
   validates :first_name, :last_name, :month, :year, presence: true
+
   belongs_to :user
 
   private

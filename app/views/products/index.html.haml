@@ -22,4 +22,4 @@
             .form-group
               %button.btn.btn-success{ ng: { click:"addToCart(product)" }}
                 Add To Cart
-              %input.input-sm{ type: "number", min: 1, max: "{{ product.on_hand_count }}", ng: { model: "product.on_hand_count" }}
+              %input.input-sm{ type: "number", min: 1, max: "{{ product.on_hand_count }}", ng: { model: "product.quantity" }}

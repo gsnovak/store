@@ -13,15 +13,15 @@
           .form-group
             %label.col-sm-3.control-label{ for: "first-name" } First Name
             .col-lg-8
-              %input#first-name{ required: "true", ng: { model: "cc.first_name", disabled: "!editingCC || orderCompleted()" }, class: "form-control" }
+              %input#first-name{ ng: { model: "cc.first_name", disabled: "!editingCC || orderCompleted()" }, class: "form-control" }
           .form-group
             %label.col-sm-3.control-label{ for: "last-name" } Last Name
             .col-lg-8
-              %input#last-name{ required: "true", ng: { model: "cc.last_name", disabled: "!editingCC || orderCompleted()" }, class: "form-control" }
+              %input#last-name{ ng: { model: "cc.last_name", disabled: "!editingCC || orderCompleted()" }, class: "form-control" }
           .form-group
             %label.col-sm-3.control-label{ for: "cc" } Card #
             .col-lg-8
-              %input#cc{ required: "true", ng: { model: "cc.number", value: "ccDisplay", disabled: "!editingCC || orderCompleted()" }, class: "form-control", placeholder: "Credit Card Number" }
+              %input#cc{ ng: { model: "cc.number", disabled: "!editingCC || orderCompleted()" }, class: "form-control", placeholder: "XXXX-XXXX-XXXX-{{ cc.last_four }}" }
           .form-group
             %label.col-sm-3.control-label{for: "cc",} Card CVV
             .col-lg-8
@@ -68,7 +68,7 @@
           .form-group
             %label.col-sm-3.control-label{ for: "zip",} Zip/Postal
             .col-lg-8
-              %input#zip{ required: "true", ng: { model: "address.zip_code", disabled: "!editingAddress" }, type: "text", class: "form-control", placeholder: "zip/postal code" }
+              %input#zip{ ng: { model: "address.zip_code", disabled: "!editingAddress" }, type: "number", class: "form-control", placeholder: "zip/postal code" }
           .form-group
             .col-sm-offset-3.col-sm-12
       .panel-footer
@@ -111,9 +111,3 @@
         %button.btn.btn-primary.pull-right{ ng: { click: "completeOrder()", hide: "orderCompleted" }}
           Complete
         .clearfix
-
-
-
-
-
-

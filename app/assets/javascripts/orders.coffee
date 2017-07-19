@@ -113,10 +113,6 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
 
   $scope.ccInit = (cc) ->
     $scope.cc = new CreditCard(cc)
-    if $scope.cc? && $scope.cc.last_four?
-      $scope.ccDisplay = "XXXX-XXXX-XXXX-" + $scope.cc.last_four
-    else
-      $scope.ccDisplay = "XXXX-XXXX-XXXX-XXXX"
 
   $scope.updateAddress =  ->
     return if $scope.savingAddress
