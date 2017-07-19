@@ -70,6 +70,12 @@ app.controller 'BaseController', ['$scope', 'Order', 'OrderItem', '$window', ($s
           $scope.productErrors = result.errors.product
         .finally ->
           $scope.addingToCart = false
+
+   $scope.removeFromCart = (item, index) ->
+    $scope.order.order_items.splice(index, 1)
+
+    itemToDelete = new OrderItem(item)
+    itemToDelete.$delete()
 ]
 
 app.controller 'ProductsController', ['$scope', 'Product', 'OrderItem', 'Order', '$window', ($scope, Product, OrderItem, Order, $window) ->
@@ -111,12 +117,6 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
       $scope.ccDisplay = "XXXX-XXXX-XXXX-" + $scope.cc.last_four
     else
       $scope.ccDisplay = "XXXX-XXXX-XXXX-XXXX"
-
-  $scope.removeFromCart = (item, index) ->
-    $scope.order.order_items.splice(index, 1)
-
-    itemToDelete = new OrderItem(item)
-    itemToDelete.$delete()
 
   $scope.updateAddress =  ->
     return if $scope.savingAddress
