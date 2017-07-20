@@ -104,7 +104,7 @@
               %td
                 {{ item.quantity }}
               %td
-                %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { click: "removeFromCart(item, $index)"}}
+                %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { disabled: "orderCompleted", click: "removeFromCart(item, $index)"}}
             %tr
               %td
                 %strong
