@@ -6,8 +6,9 @@ class CreditCard < ApplicationRecord
   
   before_save :set_last_four
   validates :number, presence: true, credit_card_number: true
-  validates :cvv, :first_name, :last_name, :month, :year, presence: true  
-
+  validates :cvv, :first_name, :last_name, :month, :year, presence: true
+  validates :cvv, length: { is: 3 }
+  
   belongs_to :user
 
   private
