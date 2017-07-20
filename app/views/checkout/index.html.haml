@@ -68,7 +68,7 @@
           .form-group
             %label.col-sm-3.control-label{ for: "zip",} Zip/Postal
             .col-lg-8
-              %input#zip{ ng: { model: "address.zip_code", disabled: "!editingAddress" }, type: "number", class: "form-control", placeholder: "zip/postal code" }
+              %input#zip{ type: "number", ng: { model: "address.zip_code" , type: "text", disabled: "!editingAddress || orderCompleted()" }, class: "form-control", placeholder: "Zip" }
           .form-group
             .col-sm-offset-3.col-sm-12
       .panel-footer
@@ -87,6 +87,8 @@
           %ul{ ng: { repeat: "val in orderErrors" }}
             %li
               {{ val }}
+        .alert.alert-success{ ng: { if: "orderCompleted" }}
+          Order was successfully placed.
         %table.table
           %thead
             %tr
@@ -108,6 +110,6 @@
                 %strong
                   Total: {{ total() | currency }}
       .panel-footer
-        %button.btn.btn-primary.pull-right{ ng: { click: "completeOrder()", hide: "orderCompleted" }}
+        %button.btn.btn-primary.pull-right{ ng: { click: "completeOrder()", hide: "orderCompleted || savingOrder " }}
           Complete
         .clearfix

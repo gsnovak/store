@@ -84,7 +84,7 @@ app.controller 'ProductsController', ['$scope', 'Product', 'OrderItem', 'Order',
       $scope.products = data.products
 ]
 
-app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'CreditCard', 'OrderItem', ($scope, Product, Order, Address, CreditCard, OrderItem) ->
+app.controller 'CheckoutController',['$q', '$scope', 'Product', 'Order', 'Address', 'CreditCard', 'OrderItem', ($q, $scope, Product, Order, Address, CreditCard, OrderItem) ->
 
   Order.cart().$promise.then (data) ->
     if data?
@@ -126,7 +126,7 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
     promise
       .then (data) ->
         delete $scope.addressErrors
-        $scope.addressInit(data)
+        $scope.addressInit(data.address)
       .catch (result) ->
         $scope.addressErrors = result.data.addresses
       .finally ->

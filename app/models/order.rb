@@ -43,7 +43,7 @@ class Order < ApplicationRecord
   end
 
   after_transition_to :placed do
-    OrderMailer.send_placement_email(id).deliver
+    OrderMailer.send_placement_email(id).deliver_later
 
     order_items.each do |item|
       item.source.on_hand_count -= item.quantity
@@ -63,6 +63,7 @@ class Order < ApplicationRecord
   end
 
   after_transition_to :canceled do
+    OrderMailer.send_cancellation_email(id).deliver_later
     order_items.each do |item|
       item.source.on_hand_count += item.quantity
       unless item.source.save
