@@ -20,6 +20,7 @@
             .form-group
               %image.image{ ng: { src: "{{ product.picture_url }}" }}
             .form-group
+            - unless current_user.nil?
               %button.btn.btn-success{ ng: { click:"addToCart(product)" }}
                 Add To Cart
               %input.input-sm{ type: "number", min: 1, max: "{{ product.on_hand_count }}", ng: { model: "product.quantity" }}

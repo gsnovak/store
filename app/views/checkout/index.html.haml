@@ -23,9 +23,9 @@
             .col-lg-8
               %input#cc{ ng: { model: "cc.number", disabled: "!editingCC || orderCompleted()" }, class: "form-control", placeholder: "XXXX-XXXX-XXXX-{{ cc.last_four }}" }
           .form-group
-            %label.col-sm-3.control-label{for: "cc",} Card CVV
+            %label.col-sm-3.control-label{for: "ccv",} Card CVV
             .col-lg-8
-              %input#cc{ type: "number", required: "true", ng: { model: "cc.cvv" , type: "text", disabled: "!editingCC || orderCompleted()" }, class: "form-control", placeholder: "Security Code" }
+              %input#ccv{ type: "number", required: "true", ng: { model: "cc.cvv" , type: "text", disabled: "!editingCC || orderCompleted()" }, class: "form-control", placeholder: "Security Code" }
           .form-group
             %label.col-sm-3.control-label{ type: "number", required: "true", for: 'exp-month'} Exp. Date
             .col-sm-9

@@ -61,13 +61,13 @@ app.controller 'BaseController', ['$scope', 'Order', 'OrderItem', '$window', ($s
         itemToSave = new OrderItem(source_id: item.id, quantity: item.quantity, source_type: "Product")
         itemToSave.order_id = $scope.order.id
         promise = itemToSave.$save()
-        $scope.order.order_items.push(itemToSave)
 
       promise
-        .then ->
+        .then (orderItem) ->
+          $scope.order.order_items.push(orderItem.order_item) unless existingItem
           $scope.saveSuccess = true
         .catch (result) ->
-          $scope.productErrors = result.errors.product
+          $scope.productErrors = result.order_items
         .finally ->
           $scope.addingToCart = false
 
@@ -143,8 +143,9 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
       promise = $scope.cc.$save()
 
     promise
-      .then ->
+      .then (data) ->
         delete $scope.ccErrors
+        $scope.ccInit(data.credit_card)
       .catch (result) ->
         $scope.ccErrors = result.data.credit_cards
       .finally ->
@@ -173,5 +174,3 @@ app.controller 'CheckoutController',['$scope', 'Product', 'Order', 'Address', 'C
         .finally ->
           $scope.savingOrder = false
 ]
-
-

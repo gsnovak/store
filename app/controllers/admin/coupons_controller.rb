@@ -1,6 +1,15 @@
 module Admin
   class CouponsController < AdminController
 
+    def index
+      @source_models = Coupon.where(state: 'active')
+    end
+
+    def destroy
+      @source_model.make_deleted!
+      redirect_to sources_path
+    end
+
     private
 
     def coupon_params
