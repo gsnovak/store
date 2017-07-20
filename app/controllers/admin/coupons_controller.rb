@@ -2,7 +2,7 @@ module Admin
   class CouponsController < AdminController
 
     def index
-      @source_models = Coupon.where(state: 'active')
+      @source_models = Coupon.where(state: Coupon::ACTIVE)
     end
 
     def destroy

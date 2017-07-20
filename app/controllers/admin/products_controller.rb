@@ -2,7 +2,7 @@ module Admin
   class ProductsController < AdminController
 
     def index
-      @source_models = Product.where(state: 'active')
+      @source_models = Product.where(state: Product::ACTIVE)
     end
 
     def destroy
