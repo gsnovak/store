@@ -13,7 +13,7 @@
           = link_to "Shop", products_path
         - if user_signed_in?
           %li
-            = link_to "({{ order.order_items.length }})", checkout_index_path, class: "glyphicon glyphicon-shopping-cart"
+            = link_to "({{ cartCount() }})", checkout_index_path, class: "glyphicon glyphicon-shopping-cart"
           %li
             = link_to "Logout", destroy_user_session_path, method: :delete
         - else

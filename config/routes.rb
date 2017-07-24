@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :orders do
          get 'cart', on: :collection, to: 'orders#cart'
+         get 'placed', on: :collection, to: 'orders#get_placed'
          put :update
       end
       resources :products
@@ -22,6 +23,7 @@ Rails.application.routes.draw do
   end
   resources :products
   resources :checkout
+  get 'thank_you', to: 'checkout#summary'
   namespace :admin do
     resources :users, :coupons, :credit_cards, :payments, :products
     resources :orders do

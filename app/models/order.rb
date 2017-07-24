@@ -13,8 +13,6 @@ class Order < ApplicationRecord
     canceled: []
    })
 
-  has_many :state_changes, autosave: false, as: :source, inverse_of: :source
-
   def order_total
     order_items.to_a.sum{|oi| oi.source.price}
   end

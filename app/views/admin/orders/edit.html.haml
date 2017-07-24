@@ -1,1 +1,94 @@
-= render partial: "form"
+.container-fluid
+  .row
+    .col-sm-4
+      .panel.panel-default
+        .panel-heading
+          %h4
+            Order
+        .panel-body
+          .col-md-6
+            %strong
+              Order Number
+          .col-md-6
+            =@order.id
+          %br
+          %br
+          .col-md-6
+            %strong
+              State
+          .col-md-6
+          =@order.state
+
+    .col-sm-4
+      .panel.panel-default
+        .panel-heading
+          %h4
+            Items
+        .panel-body
+          %table.table
+            %thead
+              %tr
+                %th Type
+                %th Name
+                %th Quantity
+                %th Price
+            %tbody
+            - @order_items.each do |item|
+              %tr
+                %td
+                  =item.source_type
+                %td
+                  =item.source.name
+                %td
+                  =item.quantity
+                %td
+                  =item.source.price
+
+    - unless @payment.nil?
+      .col-md-4
+        .panel.panel-default
+          .panel-heading
+            %h4
+              Billing
+          .panel-body
+            .col-md-6
+              %strong
+                Credit Card
+            .col-md-6
+              = "XXXX-XXXX-XXXX-#{@payment.credit_card.last_four if @payment.credit_card}"
+            %br
+            %br
+            .col-md-6
+              %strong
+                State
+            .col-md-6
+              =@payment.state
+            %br
+            %br
+            .col-md-6
+              %strong
+                Amount
+            .col-md-6
+              =@payment.amount
+    - unless @state_changes.nil? or @state_changes.empty?
+      .col-sm-4
+        .panel.panel-default
+          .panel-heading
+            %h4
+              History
+          .panel-body
+            %table.table
+              %thead
+                %tr
+                  %th From
+                  %th To
+                  %th Created
+              %tbody
+              - @state_changes.each do |sc|
+                %tr
+                  %td
+                    =sc.previous_state
+                  %td
+                    =sc.next_state
+                  %td
+                    =sc.created_at

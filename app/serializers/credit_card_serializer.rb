@@ -1,3 +1,3 @@
 class CreditCardSerializer < ActiveModel::Serializer
-  attributes :id, :month, :year, :number, :first_name, :last_name
+  attributes :id, :month, :year, :card_number, :first_name, :last_name, :cvv
 end
