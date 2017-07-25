@@ -1,19 +1,19 @@
 app = angular.module('customerApp')
 
-app.controller 'CheckoutController',['$window', '$q', '$scope', 'Product', 'Order', 'Address', 'CreditCard', 'OrderItem', ($window, $q, $scope, Product, Order, Address, CreditCard, OrderItem) ->
+app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Address', 'CreditCard', 'OrderItem', 'Product',($window, $q, $scope, Order, Address, CreditCard, OrderItem, Product) ->
 
   Order.cart().$promise.then (data) ->
     if data?
-      $scope.ord = new Order(data)
+      $scope.order = new Order(data)
     else
-      $scope.ord = new Order()
+      $scope.order = new Order()
 
-    $scope.ord.order_items.map (item) ->
+    $scope.order.order_items.map (item) ->
       new OrderItem(item)
 
     $scope.total = ->
       total = 0
-      angular.forEach($scope.ord.order_items, (item) ->
+      angular.forEach($scope.order.order_items, (item) ->
         total += (item.source.price * item.quantity))
       total
 
@@ -77,9 +77,6 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Product', 'Orde
         $scope.savingCC = false
         $scope.editingCC = false
 
-  $scope.canPlace = ->
-    $scope.savingOrder && $scope.addressReady && $scope.ccReady && !$scope.editingCC && !$scope.editingAddress
-
   $scope.completeOrder = ->
     return if $scope.savingOrder
     $scope.savingOrder = true
@@ -93,8 +90,8 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Product', 'Orde
 
     $q.all(promises)
       .then ->
-        $scope.ord.state = 'placed'
-        $scope.ord.$update()
+        $scope.order.state = 'placed'
+        $scope.order.$update()
           .then ->
             delete $scope.orderErrors
             $scope.orderCompleted = true

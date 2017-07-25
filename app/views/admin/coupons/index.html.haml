@@ -4,6 +4,7 @@
     %thead
       %tr
         %th.mdl-data-table__cell--non-numeric Name
+        %th.mdl-data-table__cell--non-numeric Type
         %th Amount
         %th.mdl-data-table__cell--non-numeric Code
         %th
@@ -12,6 +13,7 @@
       %tbody
         %tr
           %td.mdl-data-table__cell--non-numeric= coupon.name
+          %td.mdl-data-table__cell--non-numeric= coupon.coupon_type
           %td= coupon.amount
           %td.mdl-data-table__cell--non-numeric= coupon.code
           %td.mdl-data-table__cell--non-numeric= link_to 'Edit',edit_admin_coupon_path(coupon)

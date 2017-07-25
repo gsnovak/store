@@ -1,7 +1,4 @@
-.container-fluid{ ng: { controller: "ProductsController" }}
-  .alert.alert-success{ ng: { if: "saveSuccess" }}
-    %p
-      Added to cart.
+.container-fluid
   %div{ ng: { repeat: "product in products" }}
     .container{ ng: { if: "product.on_hand_count > 0 && product.available" } }
       .panel

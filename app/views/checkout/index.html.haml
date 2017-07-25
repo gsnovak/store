@@ -97,7 +97,7 @@
               %th Quantity
               %th
           %tbody
-            %tr{ ng: { repeat: "item in order.order_items" }}
+            %tr{ ng: { repeat: "item in cartOrder.order_items" }}
               %td
                 {{ item.source.name }}
               %td
@@ -105,7 +105,7 @@
               %td
                 {{ item.quantity }}
               %td
-                %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { disabled: "orderCompleted", click: "removeFromCart(item, $index)" }}
+                %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { click: "removeFromCart(item, $index)" }}
             %tr{ ng: { if: "total() > 0" }}
               %td{ colspan: "4"}
                 %strong

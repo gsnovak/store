@@ -23,6 +23,7 @@ module Admin
       if @source_model.save
         redirect_to sources_path
       else
+        render 'edit'
       end
     end
 
@@ -30,7 +31,7 @@ module Admin
       if @source_model.update(send("#{controller_name.singularize}_params"))
         redirect_to sources_path
       else
-        redirect_to 'edit'
+        render 'edit'
       end
     end
 
