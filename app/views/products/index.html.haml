@@ -14,7 +14,7 @@
               %h6
                 {{ product.price | currency :symbol : factionSize }}
             .form-group
-              %image.image{ ng: { src: "{{ product.picture_url }}" }}
+              %image{ ng: { src: "{{ product.picture_url }}" }}
             .form-group
             - unless current_user.nil?
               %button.btn.btn-success{ ng: { click:"addToCart(product)" }}
