@@ -44,6 +44,5 @@ app.controller 'BaseController', ['$scope', 'Order', 'OrderItem', '$window', 'Pr
 
   Product.query().$promise
     .then (data) ->
-      console.log data
       $scope.products = data
 ]

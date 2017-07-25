@@ -80,13 +80,16 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
   $scope.completeOrder = ->
     return if $scope.savingOrder
     $scope.savingOrder = true
-    console.log "here"
 
     promises = []
     if $scope.cc.id?
       promises.push $scope.cc.$update()
+    else
+      promises.push $scope.cc.$save()
     if $scope.address.id?
       promises.push $scope.address.$update()
+    else
+      promises.push $scope.address.$save()
 
     $q.all(promises)
       .then ->
