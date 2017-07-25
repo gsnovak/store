@@ -11,12 +11,6 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
     $scope.order.order_items.map (item) ->
       new OrderItem(item)
 
-    $scope.total = ->
-      total = 0
-      angular.forEach($scope.order.order_items, (item) ->
-        total += (item.source.price * item.quantity))
-      total
-
   $scope.editCC = ->
     $scope.editingCC = true
     $scope.ccReady = false

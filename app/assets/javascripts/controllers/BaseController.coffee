@@ -36,6 +36,12 @@ app.controller 'BaseController', ['$scope', 'Order', 'OrderItem', '$window', 'Pr
       itemToDelete = new OrderItem(item)
       itemToDelete.$delete()
 
+    $scope.total = ->
+      total = 0
+      angular.forEach($scope.cartOrder.order_items, (item) ->
+        total += (item.source.price * item.quantity))
+      total
+
     $scope.cartCount = ->
       total = 0
       angular.forEach($scope.cartOrder.order_items, (item) ->
