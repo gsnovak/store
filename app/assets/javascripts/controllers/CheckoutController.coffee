@@ -44,18 +44,12 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
 
   $scope.editCC = ->
     $scope.editingCC = true
-    $scope.ccReady = false
 
   $scope.editAddress = ->
     $scope.editingAddress = true
-    $scope.addressReady = false
 
   $scope.addressInit = (address) ->
     $scope.address = new Address(address)
-    $scope.address.state_id = address.state_id.toString() if address.state_id?
-
-  $scope.orderInit = (order) ->
-    $scope.order = new Address(address)
     $scope.address.state_id = address.state_id.toString() if address.state_id?
 
   $scope.ccInit = (cc) ->
@@ -73,14 +67,13 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
     promise
       .then (data) ->
         delete $scope.addressErrors
-        $scope.addressReady = true
         $scope.address = data
         $scope.address.state_id = data.state_id.toString() if data.state_id?
+        $scope.editingAddress = false
       .catch (result) ->
         $scope.addressErrors = result.data
       .finally ->
         $scope.savingAddress = false
-        $scope.editingAddress = false
 
   $scope.updateCC =  ->
     return if $scope.savingCC
@@ -94,11 +87,10 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
     promise
       .then (data) ->
         delete $scope.ccErrors
-        $scope.ccReady = true
         $scope.cc = data
+        $scope.editingCC = false
       .catch (result) ->
         $scope.ccErrors = result.data
       .finally ->
         $scope.savingCC = false
-        $scope.editingCC = false
 ]
