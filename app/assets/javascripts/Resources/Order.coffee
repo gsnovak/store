@@ -14,5 +14,9 @@ app.factory('Order', ['$resource', ($resource) ->
       method: 'GET',
       is_array: false,
       url: '/api/v1/orders/placed'
+    },
+    'changeState': {
+      method: 'PUT',
+      url: '/api/v1/orders/:id/change_state'
     }
 ])

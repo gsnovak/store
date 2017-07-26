@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :orders do
          get 'cart', on: :collection, to: 'orders#cart'
          get 'placed', on: :collection, to: 'orders#get_placed'
+         put 'change_state', on: :member
          put :update
       end
       resources :products

@@ -11,6 +11,38 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
     $scope.order.order_items.map (item) ->
       new OrderItem(item)
 
+    $scope.completeOrder = ->
+      return if $scope.savingOrder
+      $scope.savingOrder = true
+
+      promises = []
+      if $scope.cc.id?
+        promises.push $scope.cc.$update()
+      else
+        promises.push $scope.cc.$save()
+      if $scope.address.id?
+        promises.push $scope.address.$update()
+      else
+        promises.push $scope.address.$save()
+
+      promises.push $scope.order.$changeState().$promise
+
+      $q.all(promises)
+        .then ->
+          $scope.order.$update()
+            .then ->
+              delete $scope.orderErrors
+              $scope.orderCompleted = true
+              $window.location.href = '/thank_you'
+            .catch (result) ->
+              $scope.orderErrors = result.data
+            .finally ->
+              $scope.savingOrder = false
+        .catch (result) ->
+          $scope.orderErrors = result.data
+        .finally ->
+          $scope.savingOrder = false
+
   $scope.editCC = ->
     $scope.editingCC = true
     $scope.ccReady = false
@@ -70,35 +102,4 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
       .finally ->
         $scope.savingCC = false
         $scope.editingCC = false
-
-  $scope.completeOrder = ->
-    return if $scope.savingOrder
-    $scope.savingOrder = true
-
-    promises = []
-    if $scope.cc.id?
-      promises.push $scope.cc.$update()
-    else
-      promises.push $scope.cc.$save()
-    if $scope.address.id?
-      promises.push $scope.address.$update()
-    else
-      promises.push $scope.address.$save()
-
-    $q.all(promises)
-      .then ->
-        $scope.order.state = 'placed'
-        $scope.order.$update()
-          .then ->
-            delete $scope.orderErrors
-            $scope.orderCompleted = true
-            $window.location.href = '/thank_you'
-          .catch (result) ->
-            $scope.orderErrors = result.data
-          .finally ->
-            $scope.savingOrder = false
-      .catch (result) ->
-        $scope.orderErrors = result.data
-      .finally ->
-        $scope.savingOrder = false
 ]

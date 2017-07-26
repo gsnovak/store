@@ -13,6 +13,16 @@ class Api::V1::OrdersController < Api::V1::BaseController
     render json: get_placed_order
   end
 
+  def change_state
+    @order = Order.find(params[:id])
+
+    if @order.make_placed
+      render status: 200, json: @order
+    else
+      render status: 400, json: @order.errors.full_messages
+    end
+  end
+
   private
 
   def order_params
