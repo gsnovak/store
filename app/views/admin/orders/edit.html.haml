@@ -42,7 +42,7 @@
                 %td
                   =item.quantity
                 %td
-                  =item.source.price
+                  = number_to_currency item.source.price
 
     - unless @payment.nil?
       .col-md-4
@@ -69,7 +69,7 @@
               %strong
                 Amount
             .col-md-6
-              =@payment.amount
+              = number_to_currency @payment.amount
     - unless @state_changes.nil? or @state_changes.empty?
       .col-sm-4
         .panel.panel-default

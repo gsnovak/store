@@ -25,15 +25,14 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
       else
         promises.push $scope.address.$save()
 
-      promises.push $scope.order.$changeState().$promise
-
       $q.all(promises)
         .then ->
           $scope.order.$update()
             .then ->
-              delete $scope.orderErrors
-              $scope.orderCompleted = true
-              $window.location.href = '/thank_you'
+              $scope.order.$changeState().then ->
+                delete $scope.orderErrors
+                $scope.orderCompleted = true
+                $window.location.href = '/thank_you'
             .catch (result) ->
               $scope.orderErrors = result.data
             .finally ->

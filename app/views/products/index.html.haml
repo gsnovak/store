@@ -1,7 +1,7 @@
 .container-fluid
   %div{ ng: { repeat: "product in products" }}
     .container{ ng: { if: "product.on_hand_count > 0 && product.available" } }
-      .panel
+      .panel{ ng: { controller: "ProductController"}}
         .panel-body
           .alert.alert-danger{ ng: { if: "productErrors" }}
             %ul{ ng: { repeat: "val in productErros" }}
@@ -17,6 +17,10 @@
               %image{ ng: { src: "{{ product.picture_url }}" }}
             .form-group
             - unless current_user.nil?
-              %button.btn.btn-success{ ng: { click:"addToCart(product)" }}
-                Add To Cart
-              %input.input-sm{ type: "number", min: 1, max: "{{ product.on_hand_count }}", ng: { model: "product.quantity" }}
+              .col-sm-1
+                %select.form-control{ ng: { model: "product.quantity" }}
+                  %option{ ng: { repeat: "num in range", value: "{{ num }}"}}
+                    {{ num }}
+              .col-sm-1
+                %button.btn.btn-success{ ng: { click:"addToCart(product)" }}
+                  Add To Cart
