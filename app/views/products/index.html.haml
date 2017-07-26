@@ -1,7 +1,7 @@
 .container-fluid{ align: "center"}
   %div{ ng: { repeat: "product in products" }}
     .container{ ng: { if: "product.on_hand_count > 0 && product.available" } }
-      .panel{ ng: { controller: "ProductController"}}
+      .panel.panel-default{ ng: { controller: "ProductController"}}
         .panel-body
           .alert.alert-danger{ ng: { if: "productErrors" }}
             %ul{ ng: { repeat: "val in productErros" }}
