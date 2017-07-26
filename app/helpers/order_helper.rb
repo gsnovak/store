@@ -7,7 +7,7 @@ module OrderHelper
 
   def get_placed_order
     unless current_user.nil?
-      return current_user.orders.where(state: Order::PLACED).take
+      return current_user.orders.where(state: Order::PLACED).order(id: :desc).take
     end
   end
 end
