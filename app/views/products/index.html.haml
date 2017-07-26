@@ -1,4 +1,4 @@
-.container-fluid
+.container-fluid{ align: "center"}
   %div{ ng: { repeat: "product in products" }}
     .container{ ng: { if: "product.on_hand_count > 0 && product.available" } }
       .panel{ ng: { controller: "ProductController"}}
