@@ -88,6 +88,8 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
       .then (data) ->
         delete $scope.ccErrors
         $scope.cc = data
+        $scope.display_number = "XXXX-XXXX-XXXX-" + $scope.cc.last_four
+        console.log $scope.cc
         $scope.editingCC = false
       .catch (result) ->
         $scope.ccErrors = result.data

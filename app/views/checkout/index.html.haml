@@ -21,7 +21,7 @@
           .form-group
             %label.col-sm-3.control-label{ for: "cc" } Card #
             .col-lg-8
-              %input#cc{ ng: { model: "cc.card_number", disabled: "!editingCC || orderCompleted" }, class: "form-control", placeholder: "XXXX-XXXX-XXXX-{{ cc.last_four }}" }
+              %input#cc{ ng: { model: "cc.card_number", value: "display_number", disabled: "!editingCC || orderCompleted" }, class: "form-control", placeholder: "XXXX-XXXX-XXXX-{{ cc.last_four }}" }
           .form-group
             %label.col-sm-3.control-label{for: "ccv",} Card CVV
             .col-lg-8
