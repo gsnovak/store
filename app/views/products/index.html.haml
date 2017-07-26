@@ -17,10 +17,10 @@
               %image{ ng: { src: "{{ product.picture_url }}" }}
             .form-group
             - unless current_user.nil?
-              .col-sm-1
+              .col-sm-1.pull-right
+                %button.btn.btn-success{ ng: { click:"addToCart(product)" }}
+                  Add To Cart
+              .col-sm-1.pull-right
                 %select.form-control{ ng: { model: "product.quantity" }}
                   %option{ ng: { repeat: "num in range", value: "{{ num }}"}}
                     {{ num }}
-              .col-sm-1
-                %button.btn.btn-success{ ng: { click:"addToCart(product)" }}
-                  Add To Cart
