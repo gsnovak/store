@@ -17,13 +17,13 @@ app.controller 'BaseController', ['$scope', 'Order', 'OrderItem', '$window', 'Pr
         itemToSave = new OrderItem(existingItem)
         promise = itemToSave.$update()
       else
-        itemToSave = new OrderItem(source_id: item.id, quantity: item.quantity, source_type: "Product")
-        itemToSave.order_id = $scope.cartOrder.id
+        itemToSave = new OrderItem(source_id: item.id, quantity: item.quantity, source_type: "Product", order_id: $scope.cartOrder.id )
         promise = itemToSave.$save()
 
       promise
         .then (orderItem) ->
           $scope.cartOrder.order_items.push(orderItem) unless existingItem
+          console.log orderItem 
           $scope.saveSuccess = true
         .catch (result) ->
           $scope.productErrors = result.order_items

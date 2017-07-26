@@ -19,7 +19,6 @@
               %th Name
               %th Quantity
               %th Price
-              %th
           %tbody
             %tr{ ng: { repeat: "item in ord.order_items" }}
               %td {{ item.source.name }}
@@ -27,10 +26,9 @@
               %td {{ item.source.price | currency }}
           %tbody
             %tr
-              %th{colspan: 2}
+              %th
               %th Total:
               %th {{ amount() | currency }}
-              %th
   .col-md-4
     .panel.panel-default{ ng: { init: "ccInit(#{@credit_card.to_json.html_safe})" }}
       .panel-heading
