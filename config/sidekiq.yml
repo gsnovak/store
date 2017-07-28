@@ -1,2 +1,4 @@
 :queues:
   - default
+:concurrency:  25
+:timeout: 8
