@@ -23,7 +23,6 @@ app.controller 'BaseController', ['$scope', 'Order', 'OrderItem', '$window', 'Pr
       promise
         .then (orderItem) ->
           $scope.cartOrder.order_items.push(orderItem) unless existingItem
-          console.log orderItem 
           $scope.saveSuccess = true
         .catch (result) ->
           $scope.productErrors = result.order_items
@@ -37,16 +36,16 @@ app.controller 'BaseController', ['$scope', 'Order', 'OrderItem', '$window', 'Pr
       itemToDelete.$delete()
 
     $scope.total = ->
-      total = 0
-      angular.forEach($scope.cartOrder.order_items, (item) ->
-        total += (item.source.price * item.quantity))
+      total = _.reduce $scope.cartOrder.order_items, (runningSum, orderItem) ->
+        runningSum + orderItem.quantity*orderItem.source.price
+      , 0.00
       total
 
     $scope.cartCount = ->
-      total = 0
-      angular.forEach($scope.cartOrder.order_items, (item) ->
-        total += item.quantity)
-      total
+      count = _.reduce $scope.cartOrder.order_items, (runningSum, orderItem) ->
+        runningSum + orderItem.quantity
+      , 0
+      count
 
   Product.query().$promise
     .then (data) ->

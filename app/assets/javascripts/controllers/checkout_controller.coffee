@@ -1,6 +1,8 @@
 app = angular.module('customerApp')
 
 app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Address', 'CreditCard', 'OrderItem', 'Product',($window, $q, $scope, Order, Address, CreditCard, OrderItem, Product) ->
+  $scope.editingCC = true
+  $scope.editingAddress = true
 
   Order.cart().$promise.then (data) ->
     if data?
@@ -70,6 +72,7 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
         $scope.address = data
         $scope.address.state_id = data.state_id.toString() if data.state_id?
         $scope.editingAddress = false
+        $scope.addressReady = true
       .catch (result) ->
         $scope.addressErrors = result.data
       .finally ->
@@ -89,8 +92,8 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
         delete $scope.ccErrors
         $scope.cc = data
         $scope.display_number = "XXXX-XXXX-XXXX-" + $scope.cc.last_four
-        console.log $scope.cc
         $scope.editingCC = false
+        $scope.ccReady = true
       .catch (result) ->
         $scope.ccErrors = result.data
       .finally ->

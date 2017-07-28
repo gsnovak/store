@@ -54,15 +54,23 @@
               {{ val }}
         %form.form-horizontal{ ng: { init: "addressInit(#{@address.to_json.html_safe})" }}
           .form-group
-            %label.col-sm-3.control-label{for: "street-address"} Address
+            %label.col-sm-3.control-label{for: "address-name"} Name
             .col-lg-8
-              %input#first-address{ ng: { model: "address.street_addr", disabled: "!editingAddress || orderCompleted" }, type: "text", class: "form-control", placeholder: "Address" }
+              %input#address-name{ ng: { model: "address.name", disabled: "!editingAddress || orderCompleted" }, type: "text", class: "form-control", placeholder: "Name" }
+          .form-group
+            %label.col-sm-3.control-label{for: "street-address-1"} Address Line 1
+            .col-lg-8
+              %input#street-address-1{ ng: { model: "address.street_addr", disabled: "!editingAddress || orderCompleted" }, type: "text", class: "form-control", placeholder: "Address Line 1" }
+          .form-group
+            %label.col-sm-3.control-label{for: "street-address-2"} Address Line 2
+            .col-lg-8
+              %input#street-address-2{ ng: { model: "address.street_addr_2", disabled: "!editingAddress || orderCompleted" }, type: "text", class: "form-control", placeholder: "Address Line 2" }
           .form-group
             %label.col-sm-3.control-label{ for: "state"} State
             .col-lg-8
               = select_tag('address.state_id', options_for_select(@states.collect{ |u| [u.abbreviation, u.id.to_s]  }), { 'ng-model' => "address.state_id", 'ng-init' => '', class: "form-control", "ng-disabled" => "!editingAddress || orderCompleted"  })
           .form-group
-            %label.col-sm-3.control-label{ for: "city",} City
+            %label.col-sm-3.control-label{ for: "city"} City
             .col-lg-8
               %input#city{ ng: { model: "address.city", disabled: "!editingAddress || orderCompleted" }, type: "text", class: "form-control", placeholder: "City" }
           .form-group
@@ -111,6 +119,6 @@
                 %strong
                   Total: {{ total() | currency }}
       .panel-footer
-        %button.btn.btn-primary.pull-right{ ng: { click: "completeOrder()" }}
+        %button.btn.btn-primary.pull-right{ ng: { click: "completeOrder()", hide: "!ccReady || !addressReady || editingCC || editingAddress " }}
           Complete
         .clearfix

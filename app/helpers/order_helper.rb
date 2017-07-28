@@ -1,7 +1,7 @@
 module OrderHelper
   def get_cart
     unless current_user.nil?
-      return current_user.orders.where(state: Order::CART).take || Order.create(user_id: current_user.id)
+      Order.find_or_create_by(state: Order::CART, user_id: current_user.id)
     end
   end
 

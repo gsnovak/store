@@ -18,7 +18,10 @@
               State
           .col-md-6
           =@order.state
-
+        .panel-footer
+          .btn.btn-danger.pull-right
+            =link_to "Cancel Order", admin_order_change_state_path(@order.id), method: :put, html: { class: "btn" }
+          .clearfix
     .col-sm-4
       .panel.panel-default
         .panel-heading

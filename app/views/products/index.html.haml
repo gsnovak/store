@@ -4,7 +4,7 @@
       .panel{ ng: { controller: "ProductController"}}
         .panel-body
           .alert.alert-danger{ ng: { if: "productErrors" }}
-            %ul{ ng: { repeat: "val in productErros" }}
+            %ul{ ng: { repeat: "val in productErrors" }}
               %li
                 {{ val }}
           %form
