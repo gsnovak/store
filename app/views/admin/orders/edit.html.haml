@@ -74,6 +74,7 @@
             .col-md-6
               = number_to_currency @payment.amount
     - unless @state_changes.nil? or @state_changes.empty?
+      .clearfix
       .col-sm-4
         .panel.panel-default
           .panel-heading
