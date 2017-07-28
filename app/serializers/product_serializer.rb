@@ -1,5 +1,4 @@
 class ProductSerializer < ActiveModel::Serializer
-  include Cloudinary
   attributes :id, :name, :price, :quantity, :picture_url, :on_hand_count, :available
 
   def quantity
