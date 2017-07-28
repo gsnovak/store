@@ -9,6 +9,7 @@ app.controller 'BaseController', ['$scope', 'Order', 'OrderItem', '$window', 'Pr
 
     $scope.addToCart = (item) ->
       return if $scope.addingToCart
+      return if item.quantity == 0
       $scope.addingToCart = true
       delete $scope.addToCartSuccessful
 

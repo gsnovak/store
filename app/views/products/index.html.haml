@@ -1,4 +1,7 @@
 .container-fluid{ align: "center"}
+  -if !current_user.nil? && current_user.admin?
+    %marquee.text-danger.panel{width: "100%", behavior: "SCROLL", truespeed: 1000, bgcolor: "yellow", style: "background-color: yellow;margin-bottom: 0px;position: relative;top: -16px;"}
+      Paper prodcuts only. No cat pics!
   .container
     .alert.alert-danger{ ng: { if: "productErrors" }}
       {{ productErrors }}
