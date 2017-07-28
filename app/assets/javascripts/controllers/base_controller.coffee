@@ -10,10 +10,18 @@ app.controller 'BaseController', ['$scope', 'Order', 'OrderItem', '$window', 'Pr
     $scope.addToCart = (item) ->
       return if $scope.addingToCart
       $scope.addingToCart = true
+      delete $scope.addToCartSuccessful
 
       existingItem = _.findWhere($scope.cartOrder.order_items, { source_type: 'Product', source_id: item.id })
       if existingItem?
-        existingItem.quantity = item.quantity
+        existingItem.quantity += item.quantity
+
+        if existingItem.quantity > item.on_hand_count
+          $scope.productErrors = "There's not enough inventory."
+          existingItem.quantity -= item.quantity
+          $scope.addingToCart = false
+          return
+
         itemToSave = new OrderItem(existingItem)
         promise = itemToSave.$update()
       else
@@ -23,7 +31,8 @@ app.controller 'BaseController', ['$scope', 'Order', 'OrderItem', '$window', 'Pr
       promise
         .then (orderItem) ->
           $scope.cartOrder.order_items.push(orderItem) unless existingItem
-          $scope.saveSuccess = true
+          $scope.addToCartSuccessful = "Successfully added to cart."
+          delete $scope.productErrors
         .catch (result) ->
           $scope.productErrors = result.order_items
         .finally ->

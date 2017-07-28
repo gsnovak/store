@@ -25,11 +25,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products
+  get 'thank_you', to: 'checkout#thank_you'
 
-  resources :checkout do
-    get 'thank_you'
-  end
+  resources :products
+  resources :checkout
 
   namespace :admin do
     resources :users, :coupons, :credit_cards, :payments, :products

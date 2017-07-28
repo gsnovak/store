@@ -31,6 +31,7 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
         .then ->
           $scope.order.$update()
             .then ->
+              $scope.order.state = 'placed'
               $scope.order.$changeState().then ->
                 delete $scope.orderErrors
                 $scope.orderCompleted = true

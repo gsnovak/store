@@ -1,5 +1,5 @@
 app = angular.module('customerApp')
 
-app.controller 'ProductController',['$scope', ($scope) ->
-  $scope.range = [0..($scope.product.on_hand_count)]
+app.controller 'ProductController',['$scope', 'OrderItem', ($scope, OrderItem) ->
+  $scope.range = [1..($scope.product.on_hand_count)]
 ]

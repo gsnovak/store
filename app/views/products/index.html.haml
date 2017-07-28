@@ -1,18 +1,21 @@
 .container-fluid{ align: "center"}
+  .container
+    .alert.alert-danger{ ng: { if: "productErrors" }}
+      {{ productErrors }}
+    .alert.alert-success{ ng: { if: "addToCartSuccessful" }}
+      {{ addToCartSuccessful }}
   %div{ ng: { repeat: "product in products" }}
     .container{ ng: { if: "product.on_hand_count > 0 && product.available" } }
       .panel{ ng: { controller: "ProductController"}}
         .panel-body
-          .alert.alert-danger{ ng: { if: "productErrors" }}
-            %ul{ ng: { repeat: "val in productErrors" }}
-              %li
-                {{ val }}
           %form
             .form-group
               %h6
                 {{ product.name }}
               %h6
                 {{ product.price | currency :symbol : factionSize }}
+              %h6
+                In Stock: {{ product.on_hand_count}}
             .form-group
               %image{ ng: { src: "{{ product.picture_url }}" }}
             .form-group
