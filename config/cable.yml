@@ -6,5 +6,5 @@ test:
 
 production:
   adapter: redis
-  url: <%= ENV['REDIS_URL'] %>
+  url: <%= "#{ENV['REDIS_URL']}/1" %>
   channel_prefix: rails_storev1_production
