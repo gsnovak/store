@@ -12,9 +12,9 @@ class Product < ApplicationRecord
 
   def in_range
     if self.on_hand_count < 0
-      self.errors.add("On hand count must be greater than or equal to 0")
+      self.errors.add(:on_hand_count, 'must be greater than 0')
     elsif self.on_hand_count > 100
-      self.errors.add("On hand count must be greater than or equal to 0")
+      self.errors.add(:on_hand_count, 'must be less than 100')
     end
   end
 end
