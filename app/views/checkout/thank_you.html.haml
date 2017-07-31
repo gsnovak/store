@@ -62,9 +62,23 @@
       .panel-body
         .col-sm-6
           %strong
-            Address
+            Name
+        .col-sm-6
+          {{ address.name }}
+        %br
+        %br
+        .col-sm-6
+          %strong
+            Address Line 1
         .col-sm-6
           {{ address.street_addr }}
+        %br
+        %br
+        .col-sm-6
+          %strong
+            Address Line 2
+        .col-sm-6
+          {{ address.street_addr_2 }}
         %br
         %br
         .col-md-6
