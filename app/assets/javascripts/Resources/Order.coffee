@@ -10,7 +10,7 @@ app.factory('Order', ['$resource', ($resource) ->
       is_array: false,
       url: '/api/v1/orders/cart'
     },
-    'getPlaced': {
+    'placed': {
       method: 'GET',
       is_array: false,
       url: '/api/v1/orders/placed'

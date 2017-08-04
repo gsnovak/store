@@ -18,7 +18,7 @@ module Admin
       unless @order.nil?
         @order_items = @order.order_items
         @payment = @order.payment
-        @state_changes = StateChange.where(source_type: 'Order', source_id: @order.id )
+        @state_changes = StateChange.where(source_type: 'Order', source_id: @order.id)
       end
     end
 

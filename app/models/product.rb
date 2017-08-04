@@ -3,18 +3,10 @@ class Product < ApplicationRecord
     active: [:deleted],
     deleted: []
    })
-  validate :on_hand_count, :in_range
   validates :price, numericality: { greater_than: 0 }
   validates :name, :price, :on_hand_count, presence: true
+  validates :on_hand_count, numericality: { greater_than: 0, less_than_or_equal_to: 100 }
 
   has_many :order_items, as: :source
   mount_uploader :picture, PictureUploader
-
-  def in_range
-    if self.on_hand_count < 0
-      self.errors.add(:on_hand_count, 'must be greater than 0')
-    elsif self.on_hand_count > 100
-      self.errors.add(:on_hand_count, 'must be less than 100')
-    end
-  end
 end

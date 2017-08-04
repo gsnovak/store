@@ -10,7 +10,7 @@ class Api::V1::OrdersController < Api::V1::BaseController
   end
 
   def placed
-    render json: get_placed_order
+    render json: placed_order
   end
 
   def change_state
