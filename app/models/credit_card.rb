@@ -1,11 +1,11 @@
 class CreditCard < ApplicationRecord
   include ActiveModel::Validations
 
-  attr_accessor :card_number
+  attr_accessor :number
   attr_accessor :cvv
 
   before_save :set_last_four
-  validates :card_number, presence: true, credit_card_number: true
+  validates :number, presence: true, credit_card_number: true
   validates :cvv, :first_name, :last_name, :month, :year, presence: true
   validates :cvv, length: { is: 3 }
   validate :expiry_cannot_be_in_the_past
@@ -35,6 +35,6 @@ class CreditCard < ApplicationRecord
   private
 
   def set_last_four
-    self.last_four = card_number[-4..-1] unless card_number.nil?
+    self.last_four = number[-4..-1] unless number.nil?
   end
 end

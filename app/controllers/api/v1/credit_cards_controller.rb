@@ -1,6 +1,6 @@
 class Api::V1::CreditCardsController < Api::V1::BaseController
 
-  wrap_parameters :credit_card, include: CreditCard.column_names + [:card_number, :cvv, :user_id]
+  wrap_parameters :credit_card, include: CreditCard.column_names + [:number, :cvv, :user_id]
 
   private
 
