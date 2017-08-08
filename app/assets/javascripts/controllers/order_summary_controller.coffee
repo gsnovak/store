@@ -1,7 +1,7 @@
 app = angular.module('customerApp')
 
 app.controller 'OrderSummaryController',['$scope', 'Order', ($scope, Order) ->
-  Order.placed().$promise.then (data) ->
+  Order.query(state: 'placed').$promise.then (data) ->
     $scope.ord = data
 
     $scope.amount = ->

@@ -10,10 +10,9 @@ app.factory('Order', ['$resource', ($resource) ->
       is_array: false,
       url: '/api/v1/orders/cart'
     },
-    'placed': {
+    'query': {
       method: 'GET',
-      is_array: false,
-      url: '/api/v1/orders/placed'
+      is_array: false
     },
     'changeState': {
       method: 'PUT',

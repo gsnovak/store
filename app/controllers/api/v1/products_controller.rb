@@ -1,7 +1,7 @@
 class  Api::V1::ProductsController < Api::V1::BaseController
-  
+
   def index
-    @products = Product.where(state: Product::ACTIVE)
+    @products = active_items
 
     render json: @products
   end

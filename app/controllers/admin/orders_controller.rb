@@ -7,7 +7,7 @@ module Admin
       if @order.make_canceled
         flash[:success] = "Order successfully canceled."
       else
-        flash[:error] = "This order cannot be canceled."
+        flash[:error] = @order.errors.full_messages.join(", ")
       end
       @order.save
       redirect_to admin_orders_path
