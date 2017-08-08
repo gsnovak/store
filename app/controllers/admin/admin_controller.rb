@@ -1,6 +1,5 @@
 module Admin
   class AdminController < ApplicationController
-    include ItemUtilityHelper
     load_and_authorize_resource
 
     rescue_from CanCan::AccessDenied do |exception|

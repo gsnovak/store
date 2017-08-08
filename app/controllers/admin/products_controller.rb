@@ -1,14 +1,6 @@
 module Admin
   class ProductsController < AdminController
-
-    def index
-      @source_models = active_items
-    end
-
-    def destroy
-      @source_model.make_deleted!
-      redirect_to sources_path
-    end
+    include ItemUtilityHelper
 
     private
 

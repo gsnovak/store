@@ -1,5 +1,4 @@
 class Api::V1::BaseController < ApplicationController
-  include ItemUtilityHelper
   load_and_authorize_resource
   before_action :retrieve_source_model_by_id, only: [:edit, :update, :destroy, :show]
 
