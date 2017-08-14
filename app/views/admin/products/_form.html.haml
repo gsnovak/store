@@ -4,7 +4,6 @@
     = f.check_box :available
     = f.hidden_field(:picture_cache)
     = f.file_field(:picture)
-    = f.text_field :on_hand_count
-    = f.text_field :price
+    = f.number_field :on_hand_count
+    = f.number_field :price, class: :text_field, step: :any
     = f.submit
-

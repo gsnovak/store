@@ -13,8 +13,6 @@ class Order < ApplicationRecord
     canceled: []
    })
 
-  has_many :state_changes, autosave: false, as: :source, inverse_of: :source
-
   def order_total
     order_items.to_a.sum{|oi| oi.source.price}
   end
@@ -43,7 +41,7 @@ class Order < ApplicationRecord
   end
 
   after_transition_to :placed do
-    OrderMailer.send_placement_email(id).deliver
+    OrderMailer.send_placement_email(id).deliver_later
 
     order_items.each do |item|
       item.source.on_hand_count -= item.quantity
@@ -63,6 +61,7 @@ class Order < ApplicationRecord
   end
 
   after_transition_to :canceled do
+    OrderMailer.send_cancellation_email(id).deliver_later
     order_items.each do |item|
       item.source.on_hand_count += item.quantity
       unless item.source.save

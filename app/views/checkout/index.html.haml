@@ -1,4 +1,4 @@
-.container-fluid{ ng: { controller: 'CheckoutController' }}
+.container-fluid{ng: {controller: 'CheckoutController'}}
   .col-sm-4
     .panel.panel-default
       .panel-heading
@@ -13,28 +13,28 @@
           .form-group
             %label.col-sm-3.control-label{ for: "first-name" } First Name
             .col-lg-8
-              %input#first-name{ ng: { model: "cc.first_name", disabled: "!editingCC || orderCompleted()" }, class: "form-control" }
+              %input#first-name{ ng: { model: "cc.first_name", disabled: "!editingCC || orderCompleted" }, class: "form-control" }
           .form-group
             %label.col-sm-3.control-label{ for: "last-name" } Last Name
             .col-lg-8
-              %input#last-name{ ng: { model: "cc.last_name", disabled: "!editingCC || orderCompleted()" }, class: "form-control" }
+              %input#last-name{ ng: { model: "cc.last_name", disabled: "!editingCC || orderCompleted" }, class: "form-control" }
           .form-group
             %label.col-sm-3.control-label{ for: "cc" } Card #
             .col-lg-8
-              %input#cc{ ng: { model: "cc.number", value: "ccDisplay", disabled: "!editingCC || orderCompleted()" }, class: "form-control", placeholder: "Credit Card Number" }
+              %input#cc{ ng: { model: "cc.number", value: "display_number", disabled: "!editingCC || orderCompleted" }, class: "form-control", placeholder: "XXXX-XXXX-XXXX-{{ cc.last_four }}" }
           .form-group
-            %label.col-sm-3.control-label{for: "cc",} Card CVV
+            %label.col-sm-3.control-label{for: "ccv",} Card CVV
             .col-lg-8
-              %input#cc{ ng: { model: "cc.cvv" , type: "text", disabled: "!editingCC || orderCompleted()" }, class: "form-control", placeholder: "Security Code" }
+              %input#ccv{ type: "number", ng: { model: "cc.cvv" , type: "text", disabled: "!editingCC || orderCompleted" }, class: "form-control", placeholder: "Security Code" }
           .form-group
-            %label.col-sm-3.control-label{ for: 'exp-month'} Exp. Date
+            %label.col-sm-3.control-label{ type: "number", for: 'exp-month'} Exp. Date
             .col-sm-9
               .row
                 %div{ ng: { disabled: "!editingCC" }}
                   .col-sm-3
-                    = wrapped_angular_select_month('cc.month', "ng-disabled" => "!editingCC || orderCompleted()")
+                    = wrapped_angular_select_month('cc.month', "ng-disabled" => "!editingCC || orderCompleted")
                   .col-sm-3
-                    = wrapped_angular_select_year('cc.year', "ng-disabled" => "!editingCC || orderCompleted()")
+                    = wrapped_angular_select_year('cc.year', "ng-disabled" => "!editingCC || orderCompleted")
       .panel-footer
         %button.btn.btn-success.pull-right{ ng: { click: "updateCC()", hide: "!editingCC" }}
           %span{class: 'icon', ng: { if: "savingAddress" }}
@@ -54,27 +54,35 @@
               {{ val }}
         %form.form-horizontal{ ng: { init: "addressInit(#{@address.to_json.html_safe})" }}
           .form-group
-            %label.col-sm-3.control-label{for: "street-address"} Address
+            %label.col-sm-3.control-label{for: "address-name"} Name
             .col-lg-8
-              %input#first-address{ ng: { model: "address.street_addr", disabled: "!editingAddress || orderCompleted()" }, type: "text", class: "form-control", placeholder: "Address" }
+              %input#address-name{ ng: { model: "address.name", disabled: "!editingAddress || orderCompleted" }, type: "text", class: "form-control", placeholder: "Name" }
+          .form-group
+            %label.col-sm-3.control-label{for: "street-address-1"} Address Line 1
+            .col-lg-8
+              %input#street-address-1{ ng: { model: "address.street_addr", disabled: "!editingAddress || orderCompleted" }, type: "text", class: "form-control", placeholder: "Address Line 1" }
+          .form-group
+            %label.col-sm-3.control-label{for: "street-address-2"} Address Line 2
+            .col-lg-8
+              %input#street-address-2{ ng: { model: "address.street_addr_2", disabled: "!editingAddress || orderCompleted" }, type: "text", class: "form-control", placeholder: "Address Line 2" }
           .form-group
             %label.col-sm-3.control-label{ for: "state"} State
             .col-lg-8
-              = select_tag('address.state_id', options_for_select(@states.collect{ |u| [u.abbreviation, u.id.to_s]  }, selected = ""), { 'ng-model' => "address.state_id", 'ng-init' => '', class: "form-control", "ng-disabled" => "!editingAddress || orderCompleted()"  })
+              = select_tag('address.state_id', options_for_select(@states.collect{ |u| [u.abbreviation, u.id.to_s]  }), { 'ng-model' => "address.state_id", 'ng-init' => '', class: "form-control", "ng-disabled" => "!editingAddress || orderCompleted"  })
           .form-group
-            %label.col-sm-3.control-label{ for: "city",} City
+            %label.col-sm-3.control-label{ for: "city"} City
             .col-lg-8
-              %input#city{ ng: { model: "address.city", disabled: "!editingAddress" }, type: "text", class: "form-control", placeholder: "City" }
+              %input#city{ ng: { model: "address.city", disabled: "!editingAddress || orderCompleted" }, type: "text", class: "form-control", placeholder: "City" }
           .form-group
             %label.col-sm-3.control-label{ for: "zip",} Zip/Postal
             .col-lg-8
-              %input#zip{ ng: { model: "address.zip_code", disabled: "!editingAddress" }, type: "text", class: "form-control", placeholder: "zip/postal code" }
+              %input#zip{ type: "number", ng: { model: "address.zip_code" , type: "text", disabled: "!editingAddress || orderCompleted" }, class: "form-control", placeholder: "Zip" }
           .form-group
             .col-sm-offset-3.col-sm-12
       .panel-footer
-        %button.btn.btn-success.pull-right{ ng: { click: "updateAddress()", hide: "!editingAddress" }}
+        %button.btn.btn-success.pull-right{ ng: { click: "updateAddress()", hide: "!editingAddress || orderCompleted" }}
           Update
-        %button.btn.btn-success.pull-right{ ng: { click: "editAddress()", hide: "editingAddress" }}
+        %button.btn.btn-success.pull-right{ ng: { click: "editAddress()", hide: "editingAddress || orderCompleted" }}
           Edit
         .clearfix
   .col-sm-4
@@ -87,14 +95,17 @@
           %ul{ ng: { repeat: "val in orderErrors" }}
             %li
               {{ val }}
+        .alert.alert-success{ ng: { if: "orderCompleted" }}
+          Order was successfully placed.
         %table.table
           %thead
             %tr
               %th Name
               %th Price
               %th Quantity
+              %th
           %tbody
-            %tr{ ng: { repeat: "item in order.order_items" }}
+            %tr{ ng: { repeat: "item in cartOrder.order_items" }}
               %td
                 {{ item.source.name }}
               %td
@@ -102,18 +113,12 @@
               %td
                 {{ item.quantity }}
               %td
-                %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { click: "removeFromCart(item, $index)"}}
-            %tr
-              %td
+                %button.icon-button{ class: "glyphicon glyphicon-remove-sign", ng: { click: "removeFromCart(item, $index)" }}
+            %tr{ ng: { if: "total() > 0" }}
+              %td{ colspan: "4"}
                 %strong
                   Total: {{ total() | currency }}
       .panel-footer
-        %button.btn.btn-primary.pull-right{ ng: { click: "completeOrder()", hide: "orderCompleted" }}
+        %button.btn.btn-primary.pull-right{ ng: { click: "completeOrder()", hide: "!ccReady || !addressReady || editingCC || editingAddress " }}
           Complete
         .clearfix
-
-
-
-
-
-

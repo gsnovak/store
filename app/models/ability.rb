@@ -5,6 +5,8 @@ class Ability
     user ||= User.new
     alias_action :create, :read, :update, :destroy, to: :crud
 
+    can :checkout
+
     if user.admin?
       can :manage, :all
     else

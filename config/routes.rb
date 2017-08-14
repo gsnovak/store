@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
   root "products#index"
+
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
+
   namespace :api do
     namespace :v1 do
       resources :orders do
-         get 'cart', on: :collection, to: 'orders#cart'
+         get 'cart', on: :collection
+         get 'placed', on: :collection
+         put 'change_state', on: :member
          put :update
       end
       resources :products
@@ -20,8 +24,12 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get 'thank_you', to: 'checkout#thank_you'
+
   resources :products
   resources :checkout
+
   namespace :admin do
     resources :users, :coupons, :credit_cards, :payments, :products
     resources :orders do

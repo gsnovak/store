@@ -9,4 +9,7 @@
     = csrf_meta_tags
 %body
   =render 'layouts/admin/navbar'
+  -flash.each do |name, msg|
+    .container
+    = content_tag :div, msg, class: [:alert, alert_for(name)]
   = yield

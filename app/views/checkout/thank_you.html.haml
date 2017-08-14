@@ -1,0 +1,95 @@
+.container-fluid{ng: {controller: 'OrderSummaryController'}}
+  .col-sm-12
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Thank you
+      .panel-body
+        %h6
+          Order # {{ ord.id }} has been placed! We will begin processing your order as soon as possible. Thank you for shopping dot.paper.
+  .col-md-4
+    .panel.panel-default{ ng: { init: "orderInit(#{@order.to_json.html_safe})" }}
+      .panel-heading
+        .panel-title
+          Summary
+      .panel-body
+        %table.table
+          %thead
+            %tr
+              %th Name
+              %th Quantity
+              %th Price
+          %tbody
+            %tr{ ng: { repeat: "item in ord.order_items" }}
+              %td {{ item.source.name }}
+              %td {{ item.quantity }}
+              %td {{ item.source.price | currency }}
+          %tbody
+            %tr
+              %th
+              %th Total:
+              %th {{ amount() | currency }}
+  .col-md-4
+    .panel.panel-default{ ng: { init: "ccInit(#{@credit_card.to_json.html_safe})" }}
+      .panel-heading
+        .panel-title
+          Billing
+      .panel-body
+        .col-sm-6
+          %strong
+            Name
+        .col-sm-6
+          {{ cc.first_name }} {{ cc.last_name }}
+        %br
+        %br
+        .col-sm-6
+          %strong
+            Credit Card
+        .col-sm-6
+          XXXX-XXXX-XXXX-{{ cc.last_four }}
+        %br
+        %br
+        .col-md-6
+          %strong
+            Amount
+        .col-md-6
+          {{ amount() | currency }}
+  .col-md-4
+    .panel.panel-default{ ng: { init: "addressInit(#{@address.to_json.html_safe})" }}
+      .panel-heading
+        .panel-title
+          Shipping Address
+      .panel-body
+        .col-sm-6
+          %strong
+            Name
+        .col-sm-6
+          {{ address.name }}
+        %br
+        %br
+        .col-sm-6
+          %strong
+            Address Line 1
+        .col-sm-6
+          {{ address.street_addr }}
+        %br
+        %br
+        .col-sm-6
+          %strong
+            Address Line 2
+        .col-sm-6
+          {{ address.street_addr_2 }}
+        %br
+        %br
+        .col-md-6
+          %strong
+            City
+        .col-md-6
+          {{ address.city }}
+        %br
+        %br
+        .col-md-6
+          %strong
+            Zip Code
+        .col-md-6
+          {{ address.zip_code }}

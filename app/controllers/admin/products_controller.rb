@@ -1,5 +1,6 @@
 module Admin
   class ProductsController < AdminController
+    include ItemUtilityHelper
 
     private
 

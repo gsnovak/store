@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170711190630) do
+ActiveRecord::Schema.define(version: 20170728140447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,11 +18,13 @@ ActiveRecord::Schema.define(version: 20170711190630) do
   create_table "addresses", force: :cascade do |t|
     t.string "street_addr"
     t.string "city"
-    t.string "zip_code"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "state_id"
+    t.integer "zip_code"
+    t.string "street_addr_2"
+    t.string "name"
     t.index ["state_id"], name: "index_addresses_on_state_id"
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
@@ -33,6 +35,8 @@ ActiveRecord::Schema.define(version: 20170711190630) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "code"
+    t.string "state"
+    t.string "coupon_type"
   end
 
   create_table "credit_cards", force: :cascade do |t|
@@ -86,6 +90,7 @@ ActiveRecord::Schema.define(version: 20170711190630) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "picture"
+    t.string "state"
   end
 
   create_table "state_changes", force: :cascade do |t|
