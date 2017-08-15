@@ -74,7 +74,7 @@
             .col-lg-8
               %input#city{ ng: { model: "address.city", disabled: "!editingAddress || orderCompleted" }, type: "text", class: "form-control", placeholder: "City" }
           .form-group
-            %label.col-sm-3.control-label{ for: "zip",} Zip/Postal
+            %label.col-sm-3.control-label{ for: "zip"} Zip/Postal
             .col-lg-8
               %input#zip{ type: "number", ng: { model: "address.zip_code" , type: "text", disabled: "!editingAddress || orderCompleted" }, class: "form-control", placeholder: "Zip" }
           .form-group
@@ -118,6 +118,12 @@
               %td{ colspan: "4"}
                 %strong
                   Total: {{ total() | currency }}
+        .col-sm-3
+          %label.control-label{ for: "coupon"} Coupon
+        .col-sm-3
+          %input#coupon{ type: "text", class: "form-control", ng: { model: "couponCode"} }
+        .col-sm-3
+          %button.btn.btn-primary{ng: {click: "applyCoupon(couponCode)" }} Apply
       .panel-footer
         %button.btn.btn-primary.pull-right{ ng: { click: "completeOrder()", hide: "!ccReady || !addressReady || editingCC || editingAddress " }}
           Complete

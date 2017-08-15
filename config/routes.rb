@@ -22,6 +22,9 @@ Rails.application.routes.draw do
       resources :credit_cards do
         put :update
       end
+      resources :coupons do
+        put :update
+      end
     end
   end
 

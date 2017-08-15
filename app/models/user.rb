@@ -6,5 +6,5 @@ class User < ApplicationRecord
   has_one :credit_card
   has_one :address
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable
 end
