@@ -3,8 +3,8 @@ class Product < ApplicationRecord
     active: [:deleted],
     deleted: []
    })
-  validates :price, numericality: { greater_than: 0 }
-  validates :name, :price, :on_hand_count, presence: true
+  validates :amount, numericality: { greater_than: 0 }
+  validates :name, :amount, :on_hand_count, presence: true
   validates :on_hand_count, numericality: { greater_than: 0, less_than_or_equal_to: 100 }
 
   has_many :order_items, as: :source

@@ -109,7 +109,7 @@
               %td
                 {{ item.source.name }}
               %td
-                {{ item.source.price | currency : symbol : fractionSize }}
+                {{ item.source.amount | currency : symbol : fractionSize }}
               %td
                 {{ item.quantity }}
               %td
@@ -118,6 +118,10 @@
               %td{ colspan: "4"}
                 %strong
                   Total: {{ total() | currency }}
+        .alert.alert-danger{ ng: { if: 'couponErrors' }}
+          %ul{ ng: { repeat: "val in couponErrors" }}
+            %li
+              {{ val }}
         .col-sm-3
           %label.control-label{ for: "coupon"} Coupon
         .col-sm-3

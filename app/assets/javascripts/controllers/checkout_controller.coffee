@@ -83,15 +83,16 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
    $scope.applyCoupon = (couponCode) ->
     return if $scope.grabbingCoupon
     $scope.grabbingCoupon = true
-
     Coupon.query(code: couponCode).$promise
       .then (data) ->
         coupon = new Coupon(data)
-        console.log coupon.amount
-        $scope.subtotal -= coupon.amount
-      .catch (data) ->
-        #todo display with errors
-        console.log "something"
+        itemToSave = new OrderItem(quantity: 1, source_type: "Coupon", source_id: coupon.id, order_id: $scope.cartOrder.id )
+        itemToSave.$save().then ->
+          $scope.cartOrder.order_items.push(itemToSave)
+        .catch (result) ->
+          $scope.couponErrors = result.data
+      .catch (result) ->
+        $scope.couponErrors = result.data
       .finally ->
         $scope.grabbingCoupon = false
 

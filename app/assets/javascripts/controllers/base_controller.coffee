@@ -47,11 +47,8 @@ app.controller 'BaseController', ['$scope', 'Order', 'OrderItem', '$window', 'Pr
 
     $scope.total = ->
       total = _.reduce $scope.cartOrder.order_items, (runningSum, orderItem) ->
-        runningSum + orderItem.quantity*orderItem.source.price
+        runningSum + orderItem.quantity*orderItem.source.amount
       , 0.00
-      total
-
-      total -= $scope.coupon.amount if $scope.coupon?
       total
 
     $scope.cartCount = ->
