@@ -89,8 +89,8 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
         itemToSave = new OrderItem(quantity: 1, source_type: "Coupon", source_id: coupon.id, order_id: $scope.cartOrder.id )
         itemToSave.$save().then (item) ->
           $scope.cartOrder.order_items.push(item)
-        .catch (result) ->
-          $scope.couponErrors = result.data
+          .catch (result) ->
+            $scope.couponErrors = result.data
       .catch (result) ->
         $scope.couponErrors = result.data
       .finally ->

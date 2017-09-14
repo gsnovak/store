@@ -13,7 +13,7 @@
               %h6
                 {{ product.name }}
               %h6
-                {{ product.price | currency :symbol : factionSize }}
+                {{ product.amount | currency :symbol : factionSize }}
               %h6
                 In Stock: {{ product.on_hand_count}}
             .form-group
