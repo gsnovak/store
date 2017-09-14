@@ -8,6 +8,6 @@ class Coupon < ApplicationRecord
   has_many :order_items, as: :source, dependent: :destroy
 
   def negate_amount
-    self.amount *= -1
+    -self.amount
   end
 end
