@@ -7,6 +7,6 @@ class OrderItem < ApplicationRecord
   belongs_to :source, polymorphic: true
 
   def set_amount
-    -self.amount if source == "Coupon"
+    -self.amount if source == Coupon.name
   end
 end

@@ -5,5 +5,5 @@
     = f.hidden_field(:picture_cache)
     = f.file_field(:picture)
     = f.number_field :on_hand_count
-    = f.number_field :amount, class: :text_field, step: :any
+    = f.number_field :amount, step: 0.01
     = f.submit
