@@ -1,6 +1,6 @@
 app = angular.module('customerApp')
 
-app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Address', 'CreditCard', 'OrderItem', 'Product',($window, $q, $scope, Order, Address, CreditCard, OrderItem, Product) ->
+app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Address', 'CreditCard', 'OrderItem', 'Product', 'Coupon',($window, $q, $scope, Order, Address, CreditCard, OrderItem, Product, Coupon) ->
   $scope.editingCC = true
   $scope.editingAddress = true
 
@@ -35,6 +35,7 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
               $scope.order.$changeState().then ->
                 delete $scope.orderErrors
                 $scope.orderCompleted = true
+                $scope.coupon.$delete() if $scope.coupon
                 $window.location.href = '/thank_you'
             .catch (result) ->
               $scope.orderErrors = result.data
@@ -78,6 +79,22 @@ app.controller 'CheckoutController',['$window', '$q', '$scope', 'Order', 'Addres
         $scope.addressErrors = result.data
       .finally ->
         $scope.savingAddress = false
+
+   $scope.applyCoupon = (couponCode) ->
+    return if $scope.grabbingCoupon
+    $scope.grabbingCoupon = true
+    Coupon.query(code: couponCode).$promise
+      .then (data) ->
+        coupon = new Coupon(data)
+        itemToSave = new OrderItem(quantity: 1, source_type: "Coupon", source_id: coupon.id, order_id: $scope.cartOrder.id )
+        itemToSave.$save().then (item) ->
+          $scope.cartOrder.order_items.push(item)
+          .catch (result) ->
+            $scope.couponErrors = result.data
+      .catch (result) ->
+        $scope.couponErrors = result.data
+      .finally ->
+        $scope.grabbingCoupon = false
 
   $scope.updateCC =  ->
     return if $scope.savingCC

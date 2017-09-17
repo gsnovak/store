@@ -10,18 +10,12 @@ Rails.application.routes.draw do
          get 'cart', on: :collection
          get 'placed', on: :collection
          put 'change_state', on: :member
-         put :update
       end
       resources :products
-      resources :order_items do
-        put :update
-      end
-      resources :addresses do
-        put :update
-      end
-      resources :credit_cards do
-        put :update
-      end
+      resources :order_items
+      resources :addresses
+      resources :credit_cards
+      resources :coupons
     end
   end
 

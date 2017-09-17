@@ -1,5 +1,5 @@
 class ProductSerializer < ActiveModel::Serializer
-  attributes :id, :name, :price, :quantity, :picture_url, :on_hand_count, :available
+  attributes :id, :name, :amount, :quantity, :picture_url, :on_hand_count, :available
 
   def quantity
     return 0

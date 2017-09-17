@@ -2,6 +2,6 @@
   = bootstrap_form_for [:admin, @source_model] do |f|
     = f.text_field :code
     = f.text_field :name
-    = f.number_field :amount
-    = f.text_field :coupon_type  
+    = f.number_field :amount, step: 0.01
+    = f.text_field :coupon_type
     = f.submit
